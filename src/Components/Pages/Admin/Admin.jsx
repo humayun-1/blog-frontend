@@ -3,6 +3,10 @@ import Svgs from '../../Elements/Svgs'
 import Form from '../../Elements/Form/Form'
 import API_DATA from '../../../API/API_DATA';
 
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 const Admin = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -31,25 +35,46 @@ const Admin = () => {
         }
         return newErrors;
     };
+    const notify = (text) => toast.success(text);
+    const notify_error = (text) => toast.error(text);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const newErrors = validateForm();
         if (Object.keys(newErrors).length === 0) {
+
+
             fetch(API_DATA.BASE_URL + API_DATA.LOGIN, {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),
-            }).then(resp => resp.json()).then(data => {
-                console.log('login data', data);
+            }).then(resp => {
+                return resp.json()
+
+            }).then(data => {
+                console.log(data);
+
+                if (data.status == '200') {
+                    notify('Logged in successfully!');
+                } else {
+                    if (data.message) {
+                        notify_error(data.message)
+                    } else {
+                        notify_error("Enable to login")
+                    }
+                }
             });
+
+
 
         } else {
             setErrors(newErrors);
         }
     };
+
+
     return (
         <div className="min-h-[100vh] grid grid-cols-1 lg:grid-cols-2">
             <div className="flex flex-col lg:pt-[3rem] lg:px-[4rem] px-8 py-5">
