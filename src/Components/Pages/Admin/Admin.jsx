@@ -56,7 +56,7 @@ const Admin = () => {
             }).then(data => {
                 console.log(data);
 
-                if (data.status == '200') {
+                if (data.status == '201') {
                     notify('Logged in successfully!');
                 } else {
                     if (data.message) {
