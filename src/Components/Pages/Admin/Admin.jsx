@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Admin = () => {
+
+    const API = API_DATA();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -43,8 +45,8 @@ const Admin = () => {
         const newErrors = validateForm();
         if (Object.keys(newErrors).length === 0) {
 
-
-            fetch(API_DATA.BASE_URL + API_DATA.LOGIN, {
+            
+            fetch(API.BASE_URL + API.LOGIN, {
                 method: "POST", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
