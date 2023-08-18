@@ -127,6 +127,7 @@ const AddBlog = () => {
             />
           </FlexCol>
           <Form.Dropdown option={[
+            { value: '', label: 'Select Category' },
             { value: 'Technology', label: 'Technology' },
             { value: 'Business', label: 'Business' },
             { value: 'Politics', label: 'Politics' },
