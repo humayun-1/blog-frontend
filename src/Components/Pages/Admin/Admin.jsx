@@ -6,9 +6,10 @@ import API_DATA from '../../../API/API_DATA';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
-
+    const navigate = useNavigate()
     const API = API_DATA();
     const [formData, setFormData] = useState({
         email: '',
@@ -45,7 +46,7 @@ const Admin = () => {
         const newErrors = validateForm();
         if (Object.keys(newErrors).length === 0) {
 
-            
+
             fetch(API.BASE_URL + API.LOGIN, {
                 method: "POST", // or 'PUT'
                 headers: {
@@ -60,6 +61,9 @@ const Admin = () => {
 
                 if (data.status == '201') {
                     notify('Logged in successfully!');
+                    localStorage.setItem('token', data?.data?.token);
+                    localStorage.setItem('id', data?.data?.id);
+                    navigate('/admin/dashboard')
                 } else {
                     if (data.message) {
                         notify_error(data.message)
@@ -81,11 +85,11 @@ const Admin = () => {
         <div className="min-h-[100vh] grid grid-cols-1 lg:grid-cols-2">
             <div className="flex flex-col lg:pt-[3rem] lg:px-[4rem] px-8 py-5">
                 <div className="flex items-center gap-3">
-                    <Svgs.Logo fill={'black'} />
+                    <img src={`${process.env.PUBLIC_URL}/Assets/images/logo.png`} className="h-[3rem]" />
                 </div>
                 <div className="flex flex-1 flex-col gap-5 justify-center md:py-[3rem] py-[1.75rem] md:w-[75%] lg:mx-0 mx-auto slide-in-bottom w-full lg:py-0">
                     <h1 className="text-3xl font-light text-[#7B7B7B] lg:text-left text-center">
-                        <span className="font-semibold text-black">BBC </span>
+                        <span className="font-semibold text-black">Kazakhstan Review </span>
                         Backend
                     </h1>
                     <p className="text-[#7B7B7B] lg:text-left text-center text-sm">
@@ -106,7 +110,7 @@ const Admin = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-yellow-500/50">
+            <div className="bg-[#f4c833]/50">
                 <div className="px-8 py-5 lg:px-[4rem] lg:pt-[3rem] flex flex-col h-full">
                     <div className="flex items-center justify-end gap-4 lg:flex-row flex-col">
                         <p>Follow us on:</p>
@@ -136,7 +140,7 @@ const Admin = () => {
                         <div>
                             <div className="h-full flex items-center justify-center flex-col gap-3">
                                 <div className="w-[20rem] h-[20rem] md:h-[25rem] md:w-[25rem] lg:h-[30rem] lg:w-[30rem] relative flex justify-center items-center">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/BBC_News_2022_%28Alt%29.svg/1200px-BBC_News_2022_%28Alt%29.svg.png" className="relative z-10 h-[10rem] object-contain" />
+                                    <img src="https://vemaps.com/uploads/img/kz-06.png" className="relative z-10 h-[20rem] object-contain" />
                                 </div>
                             </div>
                         </div>

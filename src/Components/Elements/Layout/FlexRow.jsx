@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FlexRow = ({ className, children }) => {
+const FlexRow = ({ className, children,onClick }) => {
     const fn = ()=>{
         if(className){
             if(className.includes('gap-')){
@@ -13,7 +13,7 @@ const FlexRow = ({ className, children }) => {
         }
     }
     return (
-        <div className={`flex items-center ${fn()} ${className}`}>{children}</div>
+        <div onClick={onClick} className={`flex items-center ${fn()} ${className}`}>{children}</div>
     )
 }
 

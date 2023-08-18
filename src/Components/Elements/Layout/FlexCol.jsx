@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FlexCol = ({ className, children }) => {
+const FlexCol = ({ className, children,onClick }) => {
     const fn = () => {
         if (className) {
             if (className.includes('gap-')) {
@@ -13,7 +13,7 @@ const FlexCol = ({ className, children }) => {
         }
     }
     return (
-        <div className={`flex flex-col ${fn()} ${className}`}>{children}</div>
+        <div onClick={onClick} className={`flex flex-col ${fn()} ${className}`}>{children}</div>
     )
 }
 
