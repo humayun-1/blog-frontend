@@ -58,8 +58,8 @@ const BlogDetail = () => {
                                             <h3 className="text-lg leading-6 font-medium text-gray-900">Related Articles</h3>
                                             <ul className="mt-4">
                                                 {
-                                                    Related?.map(ele => {
-                                                        return <SimpleCard description={ele?.description} title={ele?.title} image={ele?.image} id={ele?._id} />
+                                                    [0,0].map(ele => {
+                                                        return <SimpleCard className={"!h-[12rem]"} />
                                                     })
                                                 }
                                             </ul>
