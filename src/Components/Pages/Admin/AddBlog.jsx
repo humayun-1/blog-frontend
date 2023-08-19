@@ -7,6 +7,11 @@ import DashboardWrapper from '../../Elements/Layout/DashboardWrapper'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useNavigate } from 'react-router-dom'
+import { Timestamp, addDoc, collection } from 'firebase/firestore'
+import { db } from '../../../firebaseConfig'
+import FlexRow from '../../Elements/Layout/FlexRow'
+import Svgs from '../../Elements/Svgs'
+
 
 const AddBlog = () => {
 
@@ -15,11 +20,15 @@ const AddBlog = () => {
   const notify_error = (text) => toast.error(text);
 
   const API = API_DATA()
-  const [Image, setImage] = useState()
+  const [Image, setImage] = useState("")
+  const [CreatedAt, setCreatedAt] = useState(Timestamp.now().toDate().toString())
   const [description, setDescription] = useState('')
+  const [errors, setErrors] = useState({});
+
   const [Blog, setBlog] = useState({
     title: '',
-    category: ''
+    category: '',
+    image: ""
   })
   // description: '',
   const onChangeHandler = (e) => {
@@ -29,54 +38,55 @@ const AddBlog = () => {
       [name]: value,
     }));
   }
-  const onSubmitHandler = () => {
-    console.log(Blog);
-    // console.log(Image);
 
-    const token = localStorage.getItem("token")
+  const validateForm = () => {
+    const newErrors = {};
+    if (!Blog.title) {
+      newErrors.title = 'Title is required';
+    }
+    if (!Blog.category) {
+      newErrors.category = 'Category is required';
+    }
+    if (!description) {
+      newErrors.description = 'Description is required';
+    }
+    if (!Image) {
+      newErrors.image = 'Image is required';
+    }
+    return newErrors;
+  };
 
-    fetch(API.BASE_URL + API.CREATE_BLOG, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
+  const onSubmitHandler = async () => {
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length === 0) {
+      await addDoc(collection(db, "blogs"), {
         ...Blog,
-        image: Image,
-        description
-      }),
-    }).then(resp => {
-      return resp.json()
-
-    }).then(data => {
-      console.log(data);
-
-      if (data.status == '201') {
-        notify('Blog Created Successfully!');
-        navigate('/')
-      } else {
-        if (data.message) {
-          notify_error(data.message)
-        } else {
-          notify_error("Enable to login")
-        }
-      }
-    });
-
+        description,
+        CreatedAt,
+        image: Image
+      }).then((data) => {
+        console.log(data);
+      }).catch((e) => {
+        console.log("ERROR::", e);
+      })
+    } else {
+      setErrors(newErrors);
+    }
   }
 
   const imgHandle = (e) => {
-    readFileDataAsBase64(e.target.files[0]).then((byteArrData) => {
-      let stringByteArr = byteArrData.toString()
-      setImage(stringByteArr)
-    }).catch((err) => {
-      console.log(err);
-    })
-
+    if (e.target?.files[0].size <= "50000") {
+      readFileDataAsBase64(e.target.files[0]).then((byteArrData) => {
+        let stringByteArr = byteArrData.toString()
+        setImage(stringByteArr)
+      }).catch((err) => {
+        console.log(err);
+      })
+    } else {
+      notify_error("Upload Image less than 60 KB!")
+      e.target.value = ''
+    }
   }
-
-
 
   function readFileDataAsBase64(file) {
     const blob = new Blob([file], {
@@ -101,40 +111,54 @@ const AddBlog = () => {
     <>
       <DashboardWrapper active={"blog"}>
         <FlexCol className={''}>
-          <h1 className='text-[2rem]'>Add a new blog</h1>
-          <Form.Input name="title" onChange={onChangeHandler} value={Blog.title} label={'Title'} />
+          <FlexRow>
+            <div className='rotate-180 cursor-pointer' onClick={() => {
+              navigate('/admin/blogs')
+            }}>
+              <Svgs.Arrow fill={'#000'} />
+            </div>
+            <h1 className='text-[2rem]'>Add a new blog</h1>
+          </FlexRow>
+          <Form.Input error={errors.title} name="title" onChange={onChangeHandler} value={Blog.title} label={'Title'} />
           {/* <Form.Input name="description" onChange={onChangeHandler} value={Blog.description} label={'Description'} /> */}
           <FlexCol className={'mt-2'}>
             <p className='text-sm'>Description</p>
-            <CKEditor
-
-              editor={ClassicEditor}
-              data="<p>This is a new blog!</p>"
-              onReady={editor => {
-                // You can store the "editor" and use when it is needed.
-                console.log('Editor is ready to use!', editor);
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                setDescription(data)
-              }}
-              onBlur={(event, editor) => {
-                console.log('Blur.', editor);
-              }}
-              onFocus={(event, editor) => {
-                console.log('Focus.', editor);
-              }}
-            />
+            <div className={`border ${errors.description && '!border-red-500'}`}>
+              <CKEditor
+                editor={ClassicEditor}
+                data=""
+                onReady={editor => {
+                  // You can store the "editor" and use when it is needed.
+                  console.log('Editor is ready to use!', editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setDescription(data)
+                }}
+                onBlur={(event, editor) => {
+                  console.log('Blur.', editor);
+                }}
+                onFocus={(event, editor) => {
+                  console.log('Focus.', editor);
+                }}
+              />
+            </div>
+            {
+              errors.description && <p className='text-sm text-red-500'>{errors.description}</p>
+            }
           </FlexCol>
-          <Form.Dropdown option={[
-            { value: '', label: 'Select Category' },
-            { value: 'Technology', label: 'Technology' },
-            { value: 'Business', label: 'Business' },
-            { value: 'Politics', label: 'Politics' },
-            { value: 'Sports', label: 'Sports' },
-          ]} name="category" onChange={onChangeHandler} value={Blog.category} label={'Category'} />
+          <Form.Dropdown
+            error={errors.category}
+            option={[
+              { value: '', label: 'Select Category' },
+              { value: 'LATEST', label: 'LATEST' },
+              { value: "EDITOR’S_PICKS", label: "EDITOR’S PICKS" },
+              { value: 'ASIA_NEWS', label: 'ASIA NEWS' },
+              { value: 'SPORT', label: 'SPORT' },
+              { value: 'NEWS', label: 'NEWS' },
+            ]} name="category" onChange={onChangeHandler} value={Blog.category} label={'Category'} />
 
-          <Form.Input name="image" onChange={imgHandle} label={'Image'} type={'file'} />
+          <Form.Input error={errors.image} accept={"image/*"} name="image" onChange={imgHandle} label={'Image'} type={'file'} />
 
           <div>
             <Form.Button onClick={onSubmitHandler}>

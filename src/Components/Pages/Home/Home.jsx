@@ -10,22 +10,41 @@ import VideoCard from '../../Elements/Cards/VideoCard'
 import Svgs from '../../Elements/Svgs'
 import Footer from '../../Footer'
 import API_DATA from '../../../API/API_DATA'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { db } from '../../../firebaseConfig'
 
 
 const Home = () => {
     const [Blog, setBlog] = useState([])
     const API = API_DATA();
+    // useEffect(() => {
+    //     fetch(API.BASE_URL + API.GET_BLOGS)
+    //         .then(resp => resp.json())
+    //         .then(data => {
+    //             if (data?.data) {
+    //                 const filteredItems = (data?.data).filter(item => item.image.includes("data:application/image;base64"));
+    //                 setBlog(filteredItems);
+    //             }
+    //         })
+    // }, [])
+
     useEffect(() => {
-        fetch(API.BASE_URL + API.GET_BLOGS)
-        .then(resp=>resp.json())
-        .then(data=>{
-            if(data?.data){
-                const filteredItems = (data?.data).filter(item => item.image.includes("data:application/image;base64"));
-                setBlog(filteredItems);
-            }
+        const blogref = collection(db, "blogs");
+        const q = query(blogref);
+
+        onSnapshot(q, (snapshot) => {
+            // console.log(snap,"snapsnapsnapsnap");
+            const allBlogs = snapshot.docs.map((docs) => {
+                return {
+                    id: docs.id,
+                    ...docs.data()
+                }
+            });
+            setBlog(allBlogs);
         })
     }, [])
-    
+
+
 
 
 
@@ -186,7 +205,6 @@ const Home = () => {
                     <div className='grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4'>
                         {
                             Blog.map(ele => {
-                                console.log(ele);
                                 return <SimpleCard id={ele?._id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
                             })
                         }

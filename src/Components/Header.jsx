@@ -37,7 +37,6 @@ const Header = () => {
   const renderHeader = () => {
     let width = window.innerWidth;
     let arrLength = getSizeValue(width, size);
-    console.log(arrLength);
     setTopBar(HeaderJson.slice(0, arrLength));
     setBottomBar(HeaderJson.slice(arrLength, HeaderJson.length));
   }

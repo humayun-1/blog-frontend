@@ -3,6 +3,7 @@ import Admin from "../Components/Pages/Admin/Admin";
 import DashboardHome from "../Components/Pages/Admin/DashboardHome";
 import Home from "../Components/Pages/Home/Home";
 import BlogDetail from "../Components/Pages/Blogs/BlogDetail";
+import Blogs from "../Components/Pages/Admin/Blogs";
 
 export const publicRoutes = [
     {
@@ -13,6 +14,9 @@ export const publicRoutes = [
         element: <Admin />,
     }, {
         path: "/admin/blogs",
+        element: <Blogs />,
+    }, {
+        path: "/admin/blog/create",
         element: <AddBlog />,
     }, 
     {

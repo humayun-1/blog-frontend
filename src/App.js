@@ -5,9 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useEffect } from 'react';
 
 function App() {
-  useEffect(() => {
-    
-  }, [])
+
   
   return (<>
     <ToastContainer />

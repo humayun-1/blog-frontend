@@ -19,16 +19,16 @@ const Search = () => {
 }
 
 const Close = () => {
-    return <svg width="32" height="32" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill='#fff' fill-rule="evenodd" clip-rule="evenodd" d="M7.48651 5.71054L5.79834 7.39871L12.3428 14.0225L5.81992 20.6229L7.46434 22.2673L13.9778 15.6768L20.5123 22.2895H20.5135L22.2017 20.6007L15.6567 13.9781L22.1795 7.37712L20.5351 5.73271L14.0216 12.3232L7.48651 5.71054Z"></path></svg>
+    return <svg width="1.2rem" height="1.2rem" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill='#fff' fill-rule="evenodd" clip-rule="evenodd" d="M7.48651 5.71054L5.79834 7.39871L12.3428 14.0225L5.81992 20.6229L7.46434 22.2673L13.9778 15.6768L20.5123 22.2895H20.5135L22.2017 20.6007L15.6567 13.9781L22.1795 7.37712L20.5351 5.73271L14.0216 12.3232L7.48651 5.71054Z"></path></svg>
 }
 
 const Play = () => {
     return <svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><g fill='none' fill-rule='evenodd'><path fill='#fff' d='m18 13 19 12.5L18 38z'/></g></svg>
 }
 
-const Arrow = () => {
+const Arrow = ({fill}) => {
     return <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 8H17M10 1L17 8L10 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M1 8H17M10 1L17 8L10 15" stroke={fill?fill:"white"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
     </svg>
 }
 
@@ -39,6 +39,10 @@ const Eye = () => {
     </svg>
 }
 
+const Plus = ()=>{
+    return <svg viewBox="0 0 24 24" width="1.2rem" height="1.2rem" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+}
+
 export default {
     Eye,
     Logo,
@@ -47,5 +51,6 @@ export default {
     Search,
     Close,
     Arrow,
-    Play
+    Play,
+    Plus
 }
