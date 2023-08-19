@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import API_DATA from '../../../API/API_DATA'
 import Preloader from './Preloader';
 import { useNavigate } from 'react-router-dom';
 
 const DashboardWrapper = ({ children, active }) => {
     const [Render, setRender] = useState(false)
-    const API = API_DATA();
     const navigate = useNavigate();
     useEffect(() => {
         if (localStorage.getItem('token')) {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Svgs from '../../Elements/Svgs'
 import Form from '../../Elements/Form/Form'
-import API_DATA from '../../../API/API_DATA';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -10,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
     const navigate = useNavigate()
-    const API = API_DATA();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -46,33 +44,13 @@ const Admin = () => {
         const newErrors = validateForm();
         if (Object.keys(newErrors).length === 0) {
 
-
-            fetch(API.BASE_URL + API.LOGIN, {
-                method: "POST", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            }).then(resp => {
-                return resp.json()
-
-            }).then(data => {
-                console.log(data);
-
-                if (data.status == '201') {
+            if(formData.email == "admin@gmail.com" && formData.password == "123456"){
                     notify('Logged in successfully!');
-                    localStorage.setItem('token', data?.data?.token);
-                    localStorage.setItem('id', data?.data?.id);
+                    localStorage.setItem('token', new Date().getTime());
                     navigate('/admin/dashboard')
-                } else {
-                    if (data.message) {
-                        notify_error(data.message)
-                    } else {
-                        notify_error("Enable to login")
-                    }
-                }
-            });
-
+            }else{
+                notify_error("Not a valid user!")
+            }
 
 
         } else {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Form from '../../Elements/Form/Form'
 import FlexCol from '../../Elements/Layout/FlexCol'
-import API_DATA from '../../../API/API_DATA'
 import { toast } from 'react-toastify'
 import DashboardWrapper from '../../Elements/Layout/DashboardWrapper'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -20,7 +19,6 @@ const AddBlog = () => {
   const notify = (text) => toast.success(text);
   const notify_error = (text) => toast.error(text);
 
-  const API = API_DATA()
   const [Image, setImage] = useState("")
   const [CreatedAt, setCreatedAt] = useState(Timestamp.now().toDate().toString())
   const [description, setDescription] = useState('')

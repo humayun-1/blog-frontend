@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Wrapper from '../../Elements/Layout/Wrapper'
-import API_DATA from '../../../API/API_DATA';
 import SimpleCard from '../../Elements/Cards/SimpleCard';
 import useSinglePost from '../../Firebase/useSinglePost';
 
