@@ -8,44 +8,47 @@ import SimpleCard from '../../Elements/Cards/SimpleCard'
 import FlexRow from '../../Elements/Layout/FlexRow'
 import VideoCard from '../../Elements/Cards/VideoCard'
 import Svgs from '../../Elements/Svgs'
-import Footer from '../../Footer'
-import API_DATA from '../../../API/API_DATA'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
-import { db } from '../../../firebaseConfig'
+import useFetchPosts from '../../Firebase/useFetchPosts'
+import SimpleCardShimmer from '../../Elements/Cards/Shimmer/SimpleCardShimmer'
+import Categories from '../../Data/Categories'
+import useFilteredData from '../../Firebase/useCategoryPost'
+import NoRecordFound from '../../Elements/Cards/NoRecordFound'
 
 
 const Home = () => {
-    const [Blog, setBlog] = useState([])
-    const API = API_DATA();
-    // useEffect(() => {
-    //     fetch(API.BASE_URL + API.GET_BLOGS)
-    //         .then(resp => resp.json())
-    //         .then(data => {
-    //             if (data?.data) {
-    //                 const filteredItems = (data?.data).filter(item => item.image.includes("data:application/image;base64"));
-    //                 setBlog(filteredItems);
-    //             }
-    //         })
-    // }, [])
 
+    // Getting All Blogs for Category
+    const [AllBlogs, setAllBlogs] = useState([]);
+    const { posts, loading } = useFetchPosts();
     useEffect(() => {
-        const blogref = collection(db, "blogs");
-        const q = query(blogref);
+        setAllBlogs(posts);
+    }, [posts])
 
-        onSnapshot(q, (snapshot) => {
-            // console.log(snap,"snapsnapsnapsnap");
-            const allBlogs = snapshot.docs.map((docs) => {
-                return {
-                    id: docs.id,
-                    ...docs.data()
-                }
-            });
-            setBlog(allBlogs);
-        })
-    }, [])
+    // Categories
+    const [Bloglatest, setBloglatest] = useState([]);
+    const LATEST = useFilteredData(Categories['LATEST'], AllBlogs);
+    useEffect(() => {
+        setBloglatest(LATEST);
+    }, [LATEST]);
 
+    const [BlogNews, setBlogNews] = useState([]);
+    const NEWS = useFilteredData(Categories['NEWS'], AllBlogs);
+    useEffect(() => {
+        setBlogNews(NEWS);
+    }, [NEWS]);
 
+    const [BlogSport, setBlogSport] = useState([]);
+    const SPORT = useFilteredData(Categories['SPORT'], AllBlogs);
+    useEffect(() => {
+        setBlogSport(SPORT);
+    }, [SPORT]);
 
+    const [BlogAsia, setBlogAsia] = useState([]);
+    const ASIA = useFilteredData(Categories['ASIA'], AllBlogs);
+    useEffect(() => {
+        console.log(ASIA);
+        setBlogAsia(ASIA);
+    }, [ASIA]);
 
 
     const Latest = ["Shop sales hit by July's wet weather", 'Cash, cars and homes seized in $735m Singapore raids', 'Burger King drops tomatoes from its India menu', 'Police urged to overlook early pub sales for World Cup']
@@ -76,23 +79,25 @@ const Home = () => {
                         </div>
                     </div>
                 </FlexCol>
+
                 <FlexCol className={'container gap-3'}>
                     <TypeSticker color={'bg-red-500'} size={'lg'} text={'News'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 gap-4'>
                         {
-                            [0, 0, 0].map(ele => {
-                                return <SimpleCard />
-                            })
+                            BlogNews?.length > 0 ? BlogNews?.map(ele => {
+                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                            }) : <NoRecordFound />
                         }
                     </div>
                 </FlexCol>
+
                 <FlexCol className={'container gap-3'}>
                     <TypeSticker color={'bg-yellow-500'} size={'lg'} text={'Sport'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 gap-4'>
                         {
-                            [0, 0, 0].map(ele => {
-                                return <SimpleCard type={'car'} />
-                            })
+                            BlogSport?.length > 0 ? BlogSport?.map(ele => {
+                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                            }) : <NoRecordFound />
                         }
                     </div>
                 </FlexCol>
@@ -127,9 +132,9 @@ const Home = () => {
                     <TypeSticker color={'bg-yellow-500'} size={'lg'} text={'Asia News'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4'>
                         {
-                            [0, 0, 0, 0].map(ele => {
-                                return <SimpleCard className="!h-[14rem]" type={'car'} />
-                            })
+                            BlogAsia?.length > 0 ? BlogAsia?.map(ele => {
+                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                            }) : <NoRecordFound />
                         }
                     </div>
                 </FlexCol>
@@ -204,9 +209,9 @@ const Home = () => {
                     <TypeSticker color={'bg-green-500'} size={'lg'} text={"Latest Updates"} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4'>
                         {
-                            Blog.map(ele => {
-                                return <SimpleCard id={ele?._id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
-                            })
+                            Bloglatest?.length > 0 ? Bloglatest?.map(ele => {
+                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                            }) : <NoRecordFound />
                         }
                     </div>
                 </FlexCol>

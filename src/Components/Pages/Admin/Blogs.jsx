@@ -5,39 +5,32 @@ import FlexRow from '../../Elements/Layout/FlexRow'
 import Form from '../../Elements/Form/Form'
 import { useNavigate } from 'react-router-dom'
 import Svgs from '../../Elements/Svgs'
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../../../firebaseConfig'
 import AdminCard from '../../Elements/Cards/AdminCard'
 import { toast } from 'react-toastify'
+import useFetchPosts from '../../Firebase/useFetchPosts'
+import NoRecordFound from '../../Elements/Cards/NoRecordFound'
 
 
 const Blogs = () => {
     const navigate = useNavigate();
-    const [AllBlogs, setAllBlogs] = useState([]);
     const notify = (text) => toast.success(text);
+    const [AllBlogs, setAllBlogs] = useState([]);
 
+    const { posts, loading } = useFetchPosts();
     useEffect(() => {
-        const blogref = collection(db, "blogs");
-        const q = query(blogref);
+        setAllBlogs(posts);
+    }, [posts])
 
-        onSnapshot(q, (snapshot) => {
-            // console.log(snap,"snapsnapsnapsnap");
-            const allBlogs = snapshot.docs.map((docs) => {
-                return {
-                    id: docs.id,
-                    ...docs.data()
-                }
-            });
-            setAllBlogs(allBlogs);
-        })
-    }, [])
+
 
     const deleteFn = async (postId) => {
         let check = window.confirm('Do you want to delete this blog?');
-        if(check){
+        if (check) {
             try {
-                const docRef = doc(db,"blogs",postId);
-                deleteDoc(docRef).then(()=>{
+                const docRef = doc(db, "blogs", postId);
+                deleteDoc(docRef).then(() => {
                     notify('Deleted successfully!');
                 })
             } catch (error) {
@@ -46,7 +39,7 @@ const Blogs = () => {
         }
     }
     return (
-        <DashboardWrapper>
+        <DashboardWrapper active={"blog"}>
             <FlexCol className={'gap-6'}>
                 <FlexRow className={'justify-between'}>
                     <h1 className='text-[2rem] font-semibold'>Blogs</h1>
@@ -64,12 +57,20 @@ const Blogs = () => {
                 <div>
                     <div className='grid xl:grid-cols-4 md:grid-cols-3 gap-6'>
                         {
-                            AllBlogs.map(ele => {
-                                console.log(ele);
-                                return <AdminCard delete_={() => {
-                                    deleteFn(ele?.id)
-                                }} title={ele?.title} description={ele?.description} image={ele?.image} />
-                            })
+                            AllBlogs?.length > 0 ?
+                                AllBlogs.map(ele => {
+                                    return <AdminCard category={ele?.category} delete_={() => {
+                                        deleteFn(ele?.id)
+                                    }} title={ele?.title} description={ele?.description} image={ele?.image} />
+                                })
+                                : <FlexRow className='not_found justify-center'>
+                                    <FlexCol className={'items-center'}>
+                                        <Svgs.NotFound size={"5rem"} />
+                                        <p className='text-sm'>No Blogs Found. <span className='underline cursor-pointer' onClick={()=>{
+                                            navigate("/admin/blog/create")
+                                        }}>Click Here</span> to Add.</p>
+                                    </FlexCol>
+                                </FlexRow>
                         }
                     </div>
                 </div>

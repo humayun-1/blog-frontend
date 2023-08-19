@@ -11,6 +11,7 @@ import { Timestamp, addDoc, collection } from 'firebase/firestore'
 import { db } from '../../../firebaseConfig'
 import FlexRow from '../../Elements/Layout/FlexRow'
 import Svgs from '../../Elements/Svgs'
+import Categories from '../../Data/Categories'
 
 
 const AddBlog = () => {
@@ -24,6 +25,8 @@ const AddBlog = () => {
   const [CreatedAt, setCreatedAt] = useState(Timestamp.now().toDate().toString())
   const [description, setDescription] = useState('')
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const [Blog, setBlog] = useState({
     title: '',
@@ -57,15 +60,49 @@ const AddBlog = () => {
   };
 
   const onSubmitHandler = async () => {
-    const newErrors = validateForm();
+    let newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
+
+
+
+      setIsLoading(true);
+
+      const toastId = toast.info('Loading...', {
+        position: "top-right",
+        autoClose: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+
+
+
+
+
+
       await addDoc(collection(db, "blogs"), {
         ...Blog,
         description,
         CreatedAt,
         image: Image
       }).then((data) => {
-        console.log(data);
+
+        // notify("Blog Created Successfully");
+        setIsLoading(false);
+        toast.dismiss(toastId); // Dismiss the loading toast
+        toast.success('Blog Uploaded!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+        navigate('/admin/blogs');
+
       }).catch((e) => {
         console.log("ERROR::", e);
       })
@@ -151,11 +188,11 @@ const AddBlog = () => {
             error={errors.category}
             option={[
               { value: '', label: 'Select Category' },
-              { value: 'LATEST', label: 'LATEST' },
-              { value: "EDITOR’S_PICKS", label: "EDITOR’S PICKS" },
-              { value: 'ASIA_NEWS', label: 'ASIA NEWS' },
-              { value: 'SPORT', label: 'SPORT' },
-              { value: 'NEWS', label: 'NEWS' },
+              ...(Object.keys(Categories).map(category => ({
+                value: Categories[category],
+                label: category,
+              })))
+
             ]} name="category" onChange={onChangeHandler} value={Blog.category} label={'Category'} />
 
           <Form.Input error={errors.image} accept={"image/*"} name="image" onChange={imgHandle} label={'Image'} type={'file'} />

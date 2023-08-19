@@ -11,7 +11,7 @@ const SimpleCard = ({ type, className, parentClass, image, description, title, i
     return (
         <FlexCol onClick={() => {
             if (id) {
-                window.location.href = `/news?news_id=${id}`
+                window.open(`/news?news_id=${id}`, '_blank');
             }
         }} className={`${parentClass} cursor-pointer`}>
             <div className={`h-[18rem] overflow-hidden ${className}`}>

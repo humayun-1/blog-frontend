@@ -411,3 +411,7 @@ h3 {
 a{
   text-decoration: underline;
 }
+
+.not_found{
+  grid-column: 1/-1
+}

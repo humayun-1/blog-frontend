@@ -23,12 +23,12 @@ const Close = () => {
 }
 
 const Play = () => {
-    return <svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><g fill='none' fill-rule='evenodd'><path fill='#fff' d='m18 13 19 12.5L18 38z'/></g></svg>
+    return <svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><g fill='none' fill-rule='evenodd'><path fill='#fff' d='m18 13 19 12.5L18 38z' /></g></svg>
 }
 
-const Arrow = ({fill}) => {
+const Arrow = ({ fill }) => {
     return <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 8H17M10 1L17 8L10 15" stroke={fill?fill:"white"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M1 8H17M10 1L17 8L10 15" stroke={fill ? fill : "white"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
     </svg>
 }
 
@@ -39,8 +39,31 @@ const Eye = () => {
     </svg>
 }
 
-const Plus = ()=>{
+const Plus = () => {
     return <svg viewBox="0 0 24 24" width="1.2rem" height="1.2rem" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+}
+
+const NotFound = ({ size }) => {
+    return <svg width={size ? size : "4rem"} height={size ? size : "4rem"} viewBox="0 0 113 114" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.99827 112.932L17.267 23.0953H95.82L106.776 112.932H5.99827Z" stroke="#909090" stroke-width="1.59285">
+        </path>
+        <path d="M79.6406 23.5723H94.932L107.038 111.498H104.17L79.6406 23.5723Z" fill="#909090">
+        </path>
+        <path d="M32.1638 22.4592C33.5104 10.2744 43.8416 0.796424 56.3858 0.796424C68.9299 0.796424 79.2611 10.2744 80.6077 22.4592H32.1638Z" stroke="#909090" stroke-width="1.59285">
+        </path>
+        <path d="M39.1581 23.2871C40.2237 14.5511 47.5524 7.80619 56.4128 7.80619C65.2732 7.80619 72.602 14.5511 73.6675 23.2871H39.1581Z" stroke="#909090" stroke-width="1.59285">
+        </path>
+        <circle cx="40.4587" cy="52.5641" r="5.41569" fill="#909090">
+        </circle>
+        <circle cx="3.82284" cy="57.9771" r="3.50427" stroke="#909090" stroke-width="0.637139">
+        </circle>
+        <circle cx="109.908" cy="83.1464" r="2.54856" stroke="#909090" stroke-width="0.637139">
+        </circle>
+        <circle cx="72.3141" cy="52.5641" r="5.41569" fill="#909090">
+        </circle>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M80.4691 93.9985C80.5231 94.2634 80.9152 94.2467 80.9152 93.9763C80.9152 81.1326 69.9328 70.7207 56.3853 70.7207C42.8379 70.7207 31.8555 81.1326 31.8555 93.9763C31.8555 94.2467 32.2476 94.2634 32.3016 93.9985C34.4866 83.2774 44.4386 75.1806 56.3853 75.1806C68.3321 75.1806 78.2841 83.2774 80.4691 93.9985Z" fill="#909090"></path>
+        <path d="M111.183 34.7227L106.723 39.1826M106.723 34.7227L111.183 39.1826" stroke="#909090" stroke-width="0.637139"></path>
+    </svg>
 }
 
 export default {
@@ -52,5 +75,6 @@ export default {
     Close,
     Arrow,
     Play,
-    Plus
+    Plus,
+    NotFound
 }

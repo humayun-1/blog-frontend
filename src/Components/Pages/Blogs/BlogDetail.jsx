@@ -2,33 +2,29 @@ import React, { useEffect, useState } from 'react'
 import Wrapper from '../../Elements/Layout/Wrapper'
 import API_DATA from '../../../API/API_DATA';
 import SimpleCard from '../../Elements/Cards/SimpleCard';
+import useSinglePost from '../../Firebase/useSinglePost';
 
 const BlogDetail = () => {
     const [Related, setRelated] = useState([]);
     const [Current, setCurrent] = useState([]);
-    const API = API_DATA();
+    const [NotFound, setNotFound] = useState(false)
+
     const searchParams = new URLSearchParams(window.location.search);
 
+    const news_id = searchParams.get('news_id');
 
+    const { Data, found } = useSinglePost(news_id);
 
     useEffect(() => {
-        const news_id = searchParams.get('news_id');
-        console.log(news_id);
-        if (news_id) {
-            fetch(API.BASE_URL + API.GET_BLOGS)
-                .then(resp => resp.json())
-                .then(data => {
-                    if (data?.data) {
-                        const filteredItems = (data?.data).filter(item => item.image.includes("data:application/image;base64") && item._id != news_id);
-                        const current = ((data?.data).filter(item => item.image.includes("data:application/image;base64"))).filter(item => item._id == news_id);
-                        setCurrent(...current);
-                        setRelated(filteredItems);
-                    }
-                })
-        } else {
-            console.log('asd');
+        if (!found) {
+            setNotFound(false)
         }
-    }, [])
+
+        if (Data) {
+            setCurrent(Data);
+            console.log(Data);
+        }
+    }, [Data])
     return (
         <>
             <Wrapper>
@@ -39,8 +35,11 @@ const BlogDetail = () => {
                                 <h1 className="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
                                     {Current?.title}
                                 </h1>
-                                <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
-                                </p>
+                                {
+                                    Current?.CreatedAt && <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
+                                        Posted at {new Date(Current?.CreatedAt).toLocaleString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                    </p>
+                                }
                             </div>
                         </div>
                     </div>
