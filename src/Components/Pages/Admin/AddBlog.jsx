@@ -110,7 +110,7 @@ const AddBlog = () => {
   }
 
   const imgHandle = (e) => {
-    if (e.target?.files[0].size <= "50000") {
+    if (e.target.value && e.target?.files[0].size <= "50000") {
       readFileDataAsBase64(e.target.files[0]).then((byteArrData) => {
         let stringByteArr = byteArrData.toString()
         setImage(stringByteArr)
