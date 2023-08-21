@@ -73,7 +73,7 @@ const DynamicCategoryPage = () => {
 
             const usedDataCount = sections.reduce((count, section) => count + section.length, 0);
             const remainingData = filteredData.slice(usedDataCount);
-            
+
             dividedSections["more"] = remainingData;
 
             setFinalData(dividedSections)
@@ -96,7 +96,11 @@ const DynamicCategoryPage = () => {
                 !loading && Object.keys(FinalData).length > 0 ? <FlexCol className={'container gap-6 py-[1.2rem]'}>
                     <div className='grid lg:grid-cols-5 gap-5'>
                         <div className='lg:col-span-3 grid lg:grid-cols-3 gap-5 h-fit'>
-                            <div className='col-span-3 grid lg:grid-cols-3 gap-5'>
+                            <div className='col-span-3 grid lg:grid-cols-3 gap-5 cursor-pointer' onClick={() => {
+                                if (FinalData?.header[0]?.id) {
+                                    window.open(`/news?news_id=${FinalData?.header[0]?.id}`, '_blank');
+                                }
+                            }}>
                                 <FlexCol>
                                     <h1 className='text-[1.2rem] hover:underline cursor-pointer line-clamp-3'>{FinalData?.header[0]?.title}</h1>
                                     <div className='text-[#5a5a5a] text-sm line-clamp-4' dangerouslySetInnerHTML={{ __html: FinalData?.header[0]?.description }}></div>
@@ -171,7 +175,11 @@ const DynamicCategoryPage = () => {
                         <div className='grid lg:grid-cols-5 gap-3'>
                             {
                                 (FinalData?.mostWatched).map((ele, i) => {
-                                    return <FlexRow className={'!items-start'}>
+                                    return <FlexRow className={'!items-start cursor-pointer'} onClick={() => {
+                                        if (ele?.id) {
+                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                        }
+                                    }}>
                                         <div className='h-fit'>
                                             <p className='text-[#b80000] text-[2rem] leading-[1]'>
                                                 {i + 1}
@@ -214,7 +222,11 @@ const DynamicCategoryPage = () => {
                         <div className='lg:grid-cols-2 grid gap-7 lg:w-[66%]'>
                             {
                                 FinalData?.mostRead.map((ele, i) => {
-                                    return <FlexRow className={'!items-start'}>
+                                    return <FlexRow className={'!items-start cursor-pointer'} onClick={() => {
+                                        if (ele?.id) {
+                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                        }
+                                    }}>
                                         <div className='h-fit'>
                                             <p className='text-[#b80000] text-[2.6rem] leading-[1]'>
                                                 {i + 1}
