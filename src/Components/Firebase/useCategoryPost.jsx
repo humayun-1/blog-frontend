@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import useFetchPosts from "./useFetchPosts";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
-const useFilteredData = (categoryName, data) => {
+const useFilteredData = (categoryName) => {
     const [filteredData, setFilteredData] = useState([]);
     useEffect(() => {
-        if (categoryName && data) {
-            const filtered = data.filter(item => item.category == categoryName);
-            console.log(categoryName);
-            setFilteredData(filtered);
-        } else {
-            setFilteredData(data);
-        }
-    }, [categoryName,data]);
+        const blogref = collection(db, "blogs");
+        const news = query(blogref, where("category", "==", categoryName));
+        onSnapshot(news, (snapshot) => {
+            const allBlogs = snapshot.docs.map((docs) => {
+                return {
+                    id: docs.id,
+                    ...docs.data()
+                }
+            });
+            setFilteredData(allBlogs)
+        });
+    }, [categoryName]);
 
     return filteredData;
 };

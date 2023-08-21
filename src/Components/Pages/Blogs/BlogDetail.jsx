@@ -21,7 +21,6 @@ const BlogDetail = () => {
 
         if (Data) {
             setCurrent(Data);
-            console.log(Data);
         }
     }, [Data])
     return (

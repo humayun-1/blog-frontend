@@ -80,11 +80,11 @@ const Header = () => {
                 </div>
               })
             }
-            <div className='cursor-pointer' onClick={() => {
+            {/* <div className='cursor-pointer' onClick={() => {
               setExpand(!Expand)
             }}>
               <Svgs.ShowMore />
-            </div>
+            </div> */}
             <FlexRow className='bg-[#202224] px-3 py-2 cursor-pointer hover:bg-[#3a3c3e] transition-all text-[0.84rem] md:w-[14rem] w-fit'>
               <div>
                 <Svgs.Search />
@@ -103,7 +103,9 @@ const Header = () => {
               <FlexRow className={'gap-5'}>
                 {
                   BottomBar.map((item, index) => {
-                    return <div className={`cursor-pointer hover_bottom`} style={{ color: item.color }}>
+                    return <div onClick={() => {
+                      navigate(item.url)
+                    }} className={`cursor-pointer hover_bottom`} style={{ color: item.color }}>
                       <p className='font-semibold text-[0.84rem] text-white'>{item.name}</p>
                     </div>
                   })

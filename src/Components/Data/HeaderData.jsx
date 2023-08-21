@@ -2,58 +2,58 @@ const HeaderJson = [
     {
         "name": "Home",
         "url": "/",
-        "color":"#fff"
+        "color": "#fff"
     },
     {
         "name": "News",
-        "url": "/",
-        "color":"#eb0000"
+        "url": "/category/news",
+        "color": "#eb0000"
+    },
+    {
+        "name": "Asia",
+        "url": "/category/asia",
+        "color": "#800080"
     },
     {
         "name": "Sport",
-        "url": "/",
-        "color":"#ffd230"
+        "url": "/category/sport",
+        "color": "#ffd230"
     },
     {
-        "name": "Reel",
-        "url": "/",
-        "color":"#0068ff"
+        "name": "Latest",
+        "url": "/category/latest",
+        "color": "#0068ff"
     },
-    {
-        "name": "Worklife",
-        "url": "/",
-        "color":"#0052a1"
-    },
-    {
-        "name": "Travel",
-        "url": "/",
-        "color":"#589e50"
-    },
-    {
-        "name": "Future",
-        "url": "/",
-        "color":"#002856"
-    },
-    {
-        "name": "Culture",
-        "url": "/",
-        "color":"#482878"
-    },
-    {
-        "name": "TV",
-        "url": "/",
-        "color":"#fff"
-    },
-    {
-        "name": "Weather",
-        "url": "/",
-        "color":"#149edc"
-    },
-    {
-        "name": "Sounds",
-        "url": "/",
-        "color":"#fa6400"
-    }
+    // {
+    //     "name": "Worklife",
+    //     "url": "/category/worklife",
+    //     "color": "#0052a1"
+    // },
+    // {
+    //     "name": "Travel",
+    //     "url": "/category/travel",
+    //     "color": "#589e50"
+    // },
+    // {
+    //     "name": "Future",
+    //     "url": "/category/future",
+    //     "color": "#002856"
+    // },
+    // {
+    //     "name": "Culture",
+    //     "url": "/category/culture",
+    //     "color": "#482878"
+    // },
+    // {
+    //     "name": "Weather",
+    //     "url": "/category/weather",
+    //     "color": "#149edc"
+    // },
+    // {
+    //     "name": "Sounds",
+    //     "url": "/category/sounds",
+    //     "color": "#fa6400"
+    // }
 ]
 
 export default HeaderJson

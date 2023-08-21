@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 
@@ -11,8 +11,8 @@ const useFetchPosts = () => {
             try {
                 const blogref = collection(db, "blogs");
                 const q = query(blogref);
+
                 onSnapshot(q, (snapshot) => {
-                    // console.log(snap,"snapsnapsnapsnap");
                     const allBlogs = snapshot.docs.map((docs) => {
                         return {
                             id: docs.id,

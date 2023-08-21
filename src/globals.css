@@ -408,10 +408,23 @@ h3 {
   }
 }
 
-a{
+a {
   text-decoration: underline;
 }
 
-.not_found{
-  grid-column: 1/-1
+.not_found {
+  grid-column: 1/-1;
+}
+
+blockquote {
+  @apply border-l-4 pl-4 sm:pl-6 dark:border-gray-700 italic text-gray-700;
+}
+
+.i-hover:hover path,
+.f-hover:hover path,
+.t-hover:hover path {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  fill: #fff;
 }

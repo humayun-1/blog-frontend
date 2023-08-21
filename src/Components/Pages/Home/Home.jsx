@@ -18,35 +18,35 @@ import NoRecordFound from '../../Elements/Cards/NoRecordFound'
 const Home = () => {
 
     // Getting All Blogs for Category
-    const [AllBlogs, setAllBlogs] = useState([]);
-    const { posts, loading } = useFetchPosts();
-    useEffect(() => {
-        setAllBlogs(posts);
-    }, [posts])
+    // const [AllBlogs, setAllBlogs] = useState([]);
+    // const { posts, loading } = useFetchPosts();
+    // useEffect(() => {
+    //     setAllBlogs(posts);
+    // }, [posts])
 
     // Categories
     const [Bloglatest, setBloglatest] = useState([]);
-    const LATEST = useFilteredData(Categories['LATEST'], AllBlogs);
+    const LATEST = useFilteredData(Categories['LATEST']);
     useEffect(() => {
         setBloglatest(LATEST);
     }, [LATEST]);
 
     const [BlogNews, setBlogNews] = useState([]);
-    const NEWS = useFilteredData(Categories['NEWS'], AllBlogs);
+    const NEWS = useFilteredData(Categories['NEWS']);
     useEffect(() => {
         setBlogNews(NEWS);
     }, [NEWS]);
 
     const [BlogSport, setBlogSport] = useState([]);
-    const SPORT = useFilteredData(Categories['SPORT'], AllBlogs);
+    const SPORT = useFilteredData(Categories['SPORT']);
     useEffect(() => {
         setBlogSport(SPORT);
     }, [SPORT]);
 
     const [BlogAsia, setBlogAsia] = useState([]);
-    const ASIA = useFilteredData(Categories['ASIA'], AllBlogs);
+    const ASIA = useFilteredData(Categories['ASIA']);
     useEffect(() => {
-        console.log(ASIA);
+
         setBlogAsia(ASIA);
     }, [ASIA]);
 
