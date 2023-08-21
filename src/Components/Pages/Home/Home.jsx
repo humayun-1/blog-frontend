@@ -26,27 +26,26 @@ const Home = () => {
 
     // Categories
     const [Bloglatest, setBloglatest] = useState([]);
-    const {loading2, noDataFound2,LATEST} = useFilteredData(Categories['LATEST']);
+    const {loading2, noDataFound2,filteredData:LATEST} = useFilteredData(Categories['LATEST']);
     useEffect(() => {
         setBloglatest(LATEST);
     }, [LATEST]);
 
     const [BlogNews, setBlogNews] = useState([]);
-    const {loading, noDataFound,NEWS} = useFilteredData(Categories['NEWS']);
+    const {loading, noDataFound,filteredData:NEWS} = useFilteredData(Categories['NEWS']);
     useEffect(() => {
         setBlogNews(NEWS);
     }, [NEWS]);
 
     const [BlogSport, setBlogSport] = useState([]);
-    const {loading3, noDataFound3,SPORT} = useFilteredData(Categories['SPORT']);
+    const {loading3, noDataFound3,filteredData:SPORT} = useFilteredData(Categories['SPORT']);
     useEffect(() => {
         setBlogSport(SPORT);
     }, [SPORT]);
 
     const [BlogAsia, setBlogAsia] = useState([]);
-    const {loading4, noDataFound4,ASIA} = useFilteredData(Categories['ASIA']);
+    const {loading4, noDataFound4,filteredData:ASIA} = useFilteredData(Categories['ASIA']);
     useEffect(() => {
-
         setBlogAsia(ASIA);
     }, [ASIA]);
 
