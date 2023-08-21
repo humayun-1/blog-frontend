@@ -26,25 +26,25 @@ const Home = () => {
 
     // Categories
     const [Bloglatest, setBloglatest] = useState([]);
-    const LATEST = useFilteredData(Categories['LATEST']);
+    const {loading2, noDataFound2,LATEST} = useFilteredData(Categories['LATEST']);
     useEffect(() => {
         setBloglatest(LATEST);
     }, [LATEST]);
 
     const [BlogNews, setBlogNews] = useState([]);
-    const NEWS = useFilteredData(Categories['NEWS']);
+    const {loading, noDataFound,NEWS} = useFilteredData(Categories['NEWS']);
     useEffect(() => {
         setBlogNews(NEWS);
     }, [NEWS]);
 
     const [BlogSport, setBlogSport] = useState([]);
-    const SPORT = useFilteredData(Categories['SPORT']);
+    const {loading3, noDataFound3,SPORT} = useFilteredData(Categories['SPORT']);
     useEffect(() => {
         setBlogSport(SPORT);
     }, [SPORT]);
 
     const [BlogAsia, setBlogAsia] = useState([]);
-    const ASIA = useFilteredData(Categories['ASIA']);
+    const {loading4, noDataFound4,ASIA} = useFilteredData(Categories['ASIA']);
     useEffect(() => {
 
         setBlogAsia(ASIA);
