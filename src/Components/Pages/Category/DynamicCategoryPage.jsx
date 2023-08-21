@@ -190,7 +190,7 @@ const DynamicCategoryPage = () => {
                         <LineTitle title="Full Story" />
                         <div className='grid lg:grid-cols-5 gap-5'>
                             <div className='col-span-2'>
-                                <NormalCard data={FinalData?.fullStory[1]} headingClass="text-[1.4rem]" size={'h-[16rem]'} noFooter noDescripton />
+                                <NormalCard data={FinalData?.fullStory[0]} headingClass="text-[1.4rem]" size={'h-[16rem]'} noFooter noDescripton />
                             </div>
                             <div className='col-span-3 grid lg:grid-cols-3 gap-3'>
                                 {
@@ -229,7 +229,7 @@ const DynamicCategoryPage = () => {
                         <LineTitle title="Around the BBC" />
                         <div className='grid lg:grid-cols-5 gap-5'>
                             <div className='col-span-2'>
-                                <NormalCard data={FinalData?.around[1]} headingClass="text-[1.4rem]" size={'h-[16rem]'} noFooter noDescripton />
+                                <NormalCard data={FinalData?.around[0]} headingClass="text-[1.4rem]" size={'h-[16rem]'} noFooter noDescripton />
 
                             </div>
                             <div className='col-span-3 grid lg:grid-cols-3 gap-3'>
