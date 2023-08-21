@@ -19,71 +19,65 @@ const DynamicCategoryPage = () => {
     const navigate = useNavigate();
     const [current] = Categories.hasOwnProperty(category.toUpperCase()) ? (HeaderJson.filter(ele => ele.name?.toLowerCase() == category.toLowerCase())) : [HeaderJson[1]]
     const [BlogNews, setBlogNews] = useState([]);
-    const NEWS = useFilteredData(Categories[(current.name).toUpperCase()]);
-    const [FinalData, setFinalData] = useState([])
-    const [Loaded, setLoaded] = useState(false)
-    const [NoData, setNoData] = useState(false)
+    const [FinalData, setFinalData] = useState({});
+
+    const { loading, noDataFound, filteredData } = useFilteredData(Categories[(current.name).toUpperCase()]);
 
     useEffect(() => {
-        setBlogNews(NEWS);
-        if (NEWS.length == 0) {
-            setNoData(true)
-            setNoData(true)
-        }
-    }, [NEWS]);
+        if (!loading && filteredData?.length > 0) {
+            const sections = [
+                {
+                    name: "header",
+                    length: 10
+                },
+                {
+                    name: "trending",
+                    length: 6
+                },
+                {
+                    name: "mustSee",
+                    length: 7
+                },
+                {
+                    name: "mostWatched",
+                    length: 5
+                },
+                {
+                    name: "fullStory",
+                    length: 7
+                },
+                {
+                    name: "mostRead",
+                    length: 10
+                },
+                {
+                    name: "around",
+                    length: 7
+                },
+            ];
 
+            const dividedSections = {};
 
+            sections.forEach(section => {
+                const sectionData = [];
+                const totalDataNeeded = section.length;
+                const availableData = filteredData.slice(); // Create a copy of the original data
 
-    useEffect(() => {
-        const sections = [
-            {
-                name: "header",
-                length: 10
-            },
-            {
-                name: "trending",
-                length: 6
-            },
-            {
-                name: "mustSee",
-                length: 7
-            },
-            {
-                name: "mostWatched",
-                length: 5
-            },
-            {
-                name: "fullStory",
-                length: 7
-            },
-            {
-                name: "mostRead",
-                length: 10
-            },
-            {
-                name: "around",
-                length: 7
-            },
-        ];
-
-        const dividedSections = {};
-
-        sections.forEach(section => {
-            if (BlogNews.length >= 1) {
-                dividedSections[section.name] = [];
-                for (let i = 0; i < section.length; i++) {
-                    const dataIndex = i % BlogNews.length;
-                    dividedSections[section.name].push(BlogNews[dataIndex]);
+                while (sectionData.length < totalDataNeeded && availableData.length > 0) {
+                    const dataIndex = Math.floor(Math.random() * availableData.length);
+                    sectionData.push(availableData.splice(dataIndex, 1)[0]);
                 }
-                setLoaded(true)
-            }
-        });
 
-        setFinalData(dividedSections)
+                dividedSections[section.name] = sectionData;
+            });
 
-    }, [BlogNews])
-
-
+            setFinalData(dividedSections)
+            console.log(dividedSections);
+        } else {
+            // console.log(loading, noDataFound, filteredData);
+        }
+    }, [loading, filteredData])
+    
 
 
     return (
@@ -94,7 +88,7 @@ const DynamicCategoryPage = () => {
                 </div>
             </div>
             {
-                Loaded ? <FlexCol className={'container gap-6 py-[1.2rem]'}>
+                !loading && Object.keys(FinalData).length > 0 ? <FlexCol className={'container gap-6 py-[1.2rem]'}>
                     <div className='grid lg:grid-cols-5 gap-5'>
                         <div className='lg:col-span-3 grid lg:grid-cols-3 gap-5 h-fit'>
                             <div className='col-span-3 grid lg:grid-cols-3 gap-5'>
@@ -307,9 +301,9 @@ const DynamicCategoryPage = () => {
                 </div>
             }
 
-            {/* {
-                NoData && <NoRecordFound />
-            } */}
+            {
+                noDataFound && <NoRecordFound />
+            }
 
 
         </Wrapper >
