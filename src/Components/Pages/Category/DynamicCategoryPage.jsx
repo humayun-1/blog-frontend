@@ -71,13 +71,18 @@ const DynamicCategoryPage = () => {
                 dividedSections[section.name] = sectionData;
             });
 
+            const usedDataCount = sections.reduce((count, section) => count + section.length, 0);
+            const remainingData = filteredData.slice(usedDataCount);
+            
+            dividedSections["more"] = remainingData;
+
             setFinalData(dividedSections)
             console.log(dividedSections);
         } else {
             // console.log(loading, noDataFound, filteredData);
         }
     }, [loading, filteredData])
-    
+
 
 
     return (
@@ -93,7 +98,7 @@ const DynamicCategoryPage = () => {
                         <div className='lg:col-span-3 grid lg:grid-cols-3 gap-5 h-fit'>
                             <div className='col-span-3 grid lg:grid-cols-3 gap-5'>
                                 <FlexCol>
-                                    <h1 className='text-[1.2rem] hover:underline cursor-pointer'>{FinalData?.header[0]?.title}</h1>
+                                    <h1 className='text-[1.2rem] hover:underline cursor-pointer line-clamp-3'>{FinalData?.header[0]?.title}</h1>
                                     <div className='text-[#5a5a5a] text-sm line-clamp-4' dangerouslySetInnerHTML={{ __html: FinalData?.header[0]?.description }}></div>
                                     <FlexRow className={"text-xs text-[#5a5a5a]"}>
                                         <FlexRow className={'gap-1 border-r pr-2'}>
