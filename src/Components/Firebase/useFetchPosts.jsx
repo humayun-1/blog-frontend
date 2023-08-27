@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ const useFetchPosts = () => {
         const fetchPosts = async () => {
             try {
                 const blogref = collection(db, "blogs");
-                const q = query(blogref);
+                const q = query(blogref,orderBy('CreatedAt', 'desc'),);
 
                 onSnapshot(q, (snapshot) => {
                     const allBlogs = snapshot.docs.map((docs) => {

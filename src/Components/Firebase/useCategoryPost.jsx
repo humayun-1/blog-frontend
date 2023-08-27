@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useFetchPosts from "./useFetchPosts";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 // const useFilteredData = (categoryName) => {
@@ -33,7 +33,12 @@ const useFilteredData = (categoryName) => {
 
     useEffect(() => {
         const blogref = collection(db, "blogs");
-        const news = query(blogref, where("category", "==", categoryName));
+        const news = query(
+            blogref,
+            where("category", "==", categoryName),
+            orderBy('CreatedAt', 'desc'), // Order by CreatedAt in descending order (newest first)
+            limit(16) // Limit the query to retrieve only the first 10 blogs
+        );
 
         const unsubscribe = onSnapshot(news, (snapshot) => {
             if (snapshot.empty) {

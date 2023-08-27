@@ -8,11 +8,12 @@ import SimpleCard from '../../Elements/Cards/SimpleCard'
 import FlexRow from '../../Elements/Layout/FlexRow'
 import VideoCard from '../../Elements/Cards/VideoCard'
 import Svgs from '../../Elements/Svgs'
-import useFetchPosts from '../../Firebase/useFetchPosts'
 import SimpleCardShimmer from '../../Elements/Cards/Shimmer/SimpleCardShimmer'
 import Categories from '../../Data/Categories'
 import useFilteredData from '../../Firebase/useCategoryPost'
 import NoRecordFound from '../../Elements/Cards/NoRecordFound'
+import Form from '../../Elements/Form/Form'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
@@ -26,31 +27,32 @@ const Home = () => {
 
     // Categories
     const [Bloglatest, setBloglatest] = useState([]);
-    const {loading2, noDataFound2,filteredData:LATEST} = useFilteredData(Categories['LATEST']);
+    const { loading: loadingLATEST, noDataFound2, filteredData: LATEST } = useFilteredData(Categories['LATEST']);
     useEffect(() => {
         setBloglatest(LATEST);
     }, [LATEST]);
 
     const [BlogNews, setBlogNews] = useState([]);
-    const {loading, noDataFound,filteredData:NEWS} = useFilteredData(Categories['NEWS']);
+    const { loading: loadingNEWS, noDataFound, filteredData: NEWS } = useFilteredData(Categories['NEWS']);
+
     useEffect(() => {
         setBlogNews(NEWS);
     }, [NEWS]);
 
     const [BlogSport, setBlogSport] = useState([]);
-    const {loading3, noDataFound3,filteredData:SPORT} = useFilteredData(Categories['SPORT']);
+    const { loading: loadingSPORT, noDataFound3, filteredData: SPORT } = useFilteredData(Categories['SPORT']);
     useEffect(() => {
         setBlogSport(SPORT);
     }, [SPORT]);
 
     const [BlogAsia, setBlogAsia] = useState([]);
-    const {loading4, noDataFound4,filteredData:ASIA} = useFilteredData(Categories['ASIA']);
+    const { loading: loadingASIA, noDataFound4, filteredData: ASIA } = useFilteredData(Categories['ASIA']);
     useEffect(() => {
         setBlogAsia(ASIA);
     }, [ASIA]);
 
 
-    const Latest = ["Shop sales hit by July's wet weather", 'Cash, cars and homes seized in $735m Singapore raids', 'Burger King drops tomatoes from its India menu', 'Police urged to overlook early pub sales for World Cup']
+    const Latest = ["Shop sales hit by July's wet weather", 'Cash, cars and homes seized in $735m Singapore raids', 'Burger King drops tomatoes from its India menu', 'Police urged to overlook early pub sales for World Cup'];
 
     const MORE_ABOUT = [
         "Abused and stalked, US election workers brace for 2024",
@@ -61,7 +63,9 @@ const Home = () => {
         " Harrison Ford has a snake species named after him  ",
         " Trump's very chaotic court and campaign schedule  ",
         " Inside notorious Atlanta jail where Trump will surrender  "
-    ]
+    ];
+
+    const navigate = useNavigate()
 
     return (
         <Wrapper>
@@ -83,22 +87,46 @@ const Home = () => {
                     <TypeSticker color={'bg-red-500'} size={'lg'} text={'News'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 gap-4'>
                         {
-                            BlogNews?.length > 0 ? BlogNews?.map(ele => {
-                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
-                            }) : <NoRecordFound />
+                            !loadingNEWS ?
+                                BlogNews?.map(ele => {
+                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                })
+                                :
+                                <>
+                                    {[0, 0, 0, 0, 0, 0].map(ele => {
+                                        return <SimpleCardShimmer />
+                                    })}
+                                </>
                         }
+
                     </div>
+                    {
+                        BlogNews?.length > 10 && <FlexRow className={'justify-center mt-[2rem]'}><Form.Button onClick={() => {
+                            navigate('/category/news')
+                        }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
+                    }
                 </FlexCol>
 
                 <FlexCol className={'container gap-3'}>
                     <TypeSticker color={'bg-yellow-500'} size={'lg'} text={'Sport'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 gap-4'>
                         {
-                            BlogSport?.length > 0 ? BlogSport?.map(ele => {
-                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
-                            }) : <NoRecordFound />
+                            !loadingSPORT ?
+                                BlogSport?.length > 0 ? BlogSport?.map(ele => {
+                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                }) : <NoRecordFound />
+                                : <>
+                                    {[0, 0, 0, 0, 0, 0].map(ele => {
+                                        return <SimpleCardShimmer />
+                                    })}
+                                </>
                         }
                     </div>
+                    {
+                        BlogSport?.length > 10 && <FlexRow className={'justify-center mt-[2rem]'}><Form.Button onClick={() => {
+                            navigate('/category/sport')
+                        }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
+                    }
                 </FlexCol>
 
 
@@ -131,11 +159,23 @@ const Home = () => {
                     <TypeSticker color={'bg-yellow-500'} size={'lg'} text={'Asia News'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4'>
                         {
-                            BlogAsia?.length > 0 ? BlogAsia?.map(ele => {
-                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
-                            }) : <NoRecordFound />
+                            !loadingASIA ?
+                                BlogAsia?.length > 0 ? BlogAsia?.map(ele => {
+                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                }) : <NoRecordFound />
+                                :
+                                <>
+                                    {[0, 0, 0, 0, 0, 0].map(ele => {
+                                        return <SimpleCardShimmer />
+                                    })}
+                                </>
                         }
                     </div>
+                    {
+                        BlogAsia?.length > 10 && <FlexRow className={'justify-center mt-[2rem]'}><Form.Button onClick={() => {
+                            navigate('/category/asia')
+                        }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
+                    }
                 </FlexCol>
 
                 <div className='bg-[#f6f6f6]'>
@@ -208,11 +248,22 @@ const Home = () => {
                     <TypeSticker color={'bg-green-500'} size={'lg'} text={"Latest Updates"} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4'>
                         {
-                            Bloglatest?.length > 0 ? Bloglatest?.map(ele => {
-                                return <SimpleCard id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
-                            }) : <NoRecordFound />
+                            !loadingLATEST ?
+                                Bloglatest?.length > 0 ? Bloglatest?.map(ele => {
+                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                }) : <NoRecordFound /> :
+                                <>
+                                    {[0, 0, 0, 0, 0, 0].map(ele => {
+                                        return <SimpleCardShimmer />
+                                    })}
+                                </>
                         }
                     </div>
+                    {
+                        Bloglatest?.length > 10 && <FlexRow className={'justify-center mt-[2rem]'}><Form.Button onClick={() => {
+                            navigate('/category/latest')
+                        }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
+                    }
                 </FlexCol>
 
 

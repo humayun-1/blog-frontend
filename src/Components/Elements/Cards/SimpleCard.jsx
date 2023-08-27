@@ -19,7 +19,7 @@ const SimpleCard = ({ type, className, parentClass, image, description, title, i
             </div>
             <div className='text-xl line-clamp-3'><h1>{title ? title : "Arrests after mob burns churches in Pakistan"}</h1></div>
             <div className='text-sm line-clamp-3'>{description ? <div dangerouslySetInnerHTML={{ __html: description }}></div> : "Public gatherings in the area are also banned for seven days after violence in the city of Jaranwala."}</div>
-            <TypeSticker color={'bg-red-500'} text={'Asia'} textClass={'!text-[##767676]'} />
+            <TypeSticker color={'bg-red-500'} text={type} textClass={'!text-[##767676]'} />
         </FlexCol>
     )
 }

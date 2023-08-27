@@ -10,7 +10,7 @@ const DashboardWrapper = ({ children, active }) => {
             setTimeout(() => {
                 setRender(true);
             }, 1000);
-        }else{
+        } else {
             navigate('/')
         }
     }, [])
@@ -28,8 +28,10 @@ const DashboardWrapper = ({ children, active }) => {
                             >
                                 <div class="xl:px-[2rem] px-[1rem] flex items-center gap-4">
                                     <div class="flex items-center gap-3 cursor-pointer flex-wrap">
-                                        <div>
-                                        <img src={`${process.env.PUBLIC_URL}/Assets/images/logo.png`} className="h-[3rem]" />
+                                        <div onClick={() => {
+                                            navigate('/')
+                                        }}>
+                                            <img src={`${process.env.PUBLIC_URL}/Assets/images/logo.png`} className="h-[3rem]" />
                                         </div>
                                     </div>
                                     <div class="cursor-pointer lg:hidden block">
@@ -52,7 +54,7 @@ const DashboardWrapper = ({ children, active }) => {
                                 <div
                                     class="xl:px-[2rem] px-[1rem] flex flex-col gap-2 overflow-y-auto scroll-hidden-lg flex-1 lg:mb-0 mb-[4rem] lg:pb-0 pb-[1rem]"
                                 >
-                                    <div onClick={()=>{
+                                    <div onClick={() => {
                                         navigate('/admin/dashboard')
                                     }} class={`px-3 py-4 hover:bg-gray-200 transition-all cursor-pointer rounded-lg flex items-center gap-3 ${active == 'dashboard' && "!bg-yellow-500"}`}
                                     >
@@ -96,7 +98,7 @@ const DashboardWrapper = ({ children, active }) => {
                                     </div>
 
 
-                                    <div onClick={()=>{
+                                    <div onClick={() => {
                                         navigate('/admin/blogs')
                                     }} class={`px-3 py-4 hover:bg-gray-200 transition-all cursor-pointer rounded-lg flex items-center gap-3 ${active == 'blog' && "!bg-yellow-500"}`}
                                     >
@@ -104,7 +106,7 @@ const DashboardWrapper = ({ children, active }) => {
                                         <p class="text-sm">Blogs</p>
                                     </div>
 
-                                    <div onClick={()=>{
+                                    <div onClick={() => {
                                         localStorage.removeItem("token")
                                         navigate('/')
                                     }} class={`px-3 py-4 hover:bg-gray-200 transition-all cursor-pointer rounded-lg flex items-center gap-3`}>

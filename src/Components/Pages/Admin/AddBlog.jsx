@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from '../../Elements/Form/Form'
 import FlexCol from '../../Elements/Layout/FlexCol'
 import { toast } from 'react-toastify'
@@ -6,7 +6,7 @@ import DashboardWrapper from '../../Elements/Layout/DashboardWrapper'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useNavigate } from 'react-router-dom'
-import { Timestamp, addDoc, collection } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, getDoc, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../../../firebaseConfig'
 import FlexRow from '../../Elements/Layout/FlexRow'
 import Svgs from '../../Elements/Svgs'
@@ -14,6 +14,10 @@ import Categories from '../../Data/Categories'
 
 
 const AddBlog = () => {
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const queryId = queryParams.get('id');
+  const [Edit, setEdit] = useState(false)
 
   const navigate = useNavigate();
   const notify = (text) => toast.success(text);
@@ -25,12 +29,37 @@ const AddBlog = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-
   const [Blog, setBlog] = useState({
     title: '',
     category: '',
     image: ""
   })
+
+  useEffect(() => {
+    if (queryId) {
+      setEdit(true);
+      const docRefff = doc(db, "blogs", queryId);
+      getDoc(docRefff).then(doc => {
+        setBlog(doc.data())
+      }).catch(err => {
+
+        console.log(err, 'asdsaa');
+        toast.error('Something Went Wrong!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigate('/admin/blogs');
+
+      })
+    }
+  }, [])
+
+
   // description: '',
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -42,16 +71,16 @@ const AddBlog = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!Blog.title) {
+    if (!Blog.title && !(Blog?.title)) {
       newErrors.title = 'Title is required';
     }
-    if (!Blog.category) {
+    if (!Blog.category && !(Blog?.category)) {
       newErrors.category = 'Category is required';
     }
-    if (!description) {
+    if (!description && !(Blog?.description)) {
       newErrors.description = 'Description is required';
     }
-    if (!Image) {
+    if (!Image && !(Blog?.image)) {
       newErrors.image = 'Image is required';
     }
     return newErrors;
@@ -60,8 +89,6 @@ const AddBlog = () => {
   const onSubmitHandler = async () => {
     let newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-
-
 
       setIsLoading(true);
 
@@ -74,36 +101,67 @@ const AddBlog = () => {
         progress: undefined,
       });
 
-
-
-
-
-
-      await addDoc(collection(db, "blogs"), {
-        ...Blog,
-        description,
-        CreatedAt,
-        image: Image
-      }).then((data) => {
-
-        // notify("Blog Created Successfully");
-        setIsLoading(false);
-        toast.dismiss(toastId); // Dismiss the loading toast
-        toast.success('Blog Uploaded!', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+      if (Edit) {
+        const docRef = doc(db, 'blogs', queryId);
+        await updateDoc(docRef, {
+          ...Blog,
+          description: description ? description : Blog?.description,
+          CreatedAt,
+          image: Image ? Image : Blog?.image
+        }).then(() => {
+          setIsLoading(false);
+          toast.dismiss(toastId); // Dismiss the loading toast
+          toast.success('Blog Updated!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate('/admin/blogs');
+        }).catch(err => {
+          toast.error('Something Went Wrong!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          navigate('/admin/blogs');
         });
+      } else {
+        await addDoc(collection(db, "blogs"), {
+          ...Blog,
+          description,
+          CreatedAt,
+          image: Image
+        }).then((data) => {
 
-        navigate('/admin/blogs');
+          // notify("Blog Created Successfully");
+          setIsLoading(false);
+          toast.dismiss(toastId); // Dismiss the loading toast
+          toast.success('Blog Uploaded!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
 
-      }).catch((e) => {
-        console.log("ERROR::", e);
-      })
+          navigate('/admin/blogs');
+
+        }).catch((e) => {
+          console.log("ERROR::", e);
+        })
+      }
+
+
     } else {
       setErrors(newErrors);
     }
@@ -152,29 +210,18 @@ const AddBlog = () => {
             }}>
               <Svgs.Arrow fill={'#000'} />
             </div>
-            <h1 className='text-[2rem]'>Add a new blog</h1>
+            <h1 className='text-[2rem]'>{Edit ? "Edit Blog" : " Add a new blog"}</h1>
           </FlexRow>
-          <Form.Input error={errors.title} name="title" onChange={onChangeHandler} value={Blog.title} label={'Title'} />
-          {/* <Form.Input name="description" onChange={onChangeHandler} value={Blog.description} label={'Description'} /> */}
+          <Form.Input error={errors.title} name="title" onChange={onChangeHandler} value={Blog?.title} label={'Title'} />
           <FlexCol className={'mt-2'}>
             <p className='text-sm'>Description</p>
             <div className={`border ${errors.description && '!border-red-500'}`}>
               <CKEditor
                 editor={ClassicEditor}
-                data=""
-                onReady={editor => {
-                  // You can store the "editor" and use when it is needed.
-
-                }}
+                data={Blog?.description ? Blog?.description : description}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   setDescription(data)
-                }}
-                onBlur={(event, editor) => {
-
-                }}
-                onFocus={(event, editor) => {
-
                 }}
               />
             </div>
@@ -191,9 +238,13 @@ const AddBlog = () => {
                 label: category,
               })))
 
-            ]} name="category" onChange={onChangeHandler} value={Blog.category} label={'Category'} />
+            ]} name="category" onChange={onChangeHandler} value={Blog?.category} label={'Category'} />
 
           <Form.Input error={errors.image} accept={"image/*"} name="image" onChange={imgHandle} label={'Image'} type={'file'} />
+
+          {
+            Blog?.image || Image ? <img src={Image ? Image : Blog?.image} alt="" className='h-[8rem] w-[10rem] object-cover rounded-lg' /> : ""
+          }
 
           <div>
             <Form.Button onClick={onSubmitHandler}>

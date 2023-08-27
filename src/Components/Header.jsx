@@ -58,7 +58,9 @@ const Header = () => {
         <FlexRow className='justify-between gap-4'>
           <div>
             <FlexRow className='gap-5'>
-              <div className='w-[12rem] sm:block hidden'>
+              <div className='w-[12rem] sm:block hidden' onClick={()=>{
+                navigate('/')
+              }}>
                 {/* <Svgs.Logo /> */}
                 <img src={`${process.env.PUBLIC_URL}/Assets/images/logo.png`} className="h-[3rem] w-full object-contain" />
               </div>

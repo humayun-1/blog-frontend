@@ -11,6 +11,7 @@ import AdminCard from '../../Elements/Cards/AdminCard'
 import { toast } from 'react-toastify'
 import useFetchPosts from '../../Firebase/useFetchPosts'
 import NoRecordFound from '../../Elements/Cards/NoRecordFound'
+import SimpleCardShimmer from '../../Elements/Cards/Shimmer/SimpleCardShimmer'
 
 
 const Blogs = () => {
@@ -56,21 +57,22 @@ const Blogs = () => {
                 </FlexRow>
                 <div>
                     <div className='grid xl:grid-cols-4 md:grid-cols-3 gap-6'>
+
                         {
-                            AllBlogs?.length > 0 ?
+                            !loading ?
                                 AllBlogs.map(ele => {
-                                    return <AdminCard category={ele?.category} delete_={() => {
+                                    return <AdminCard onClick={() => {
+                                        navigate(`/admin/blog/create?id=${ele?.id}`)
+                                    }} category={ele?.category} delete_={() => {
                                         deleteFn(ele?.id)
                                     }} title={ele?.title} description={ele?.description} image={ele?.image} />
                                 })
-                                : <FlexRow className='not_found justify-center'>
-                                    <FlexCol className={'items-center'}>
-                                        <Svgs.NotFound size={"5rem"} />
-                                        <p className='text-sm'>No Blogs Found. <span className='underline cursor-pointer' onClick={()=>{
-                                            navigate("/admin/blog/create")
-                                        }}>Click Here</span> to Add.</p>
-                                    </FlexCol>
-                                </FlexRow>
+                                :
+                                <>
+                                    {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(ele => {
+                                        return <SimpleCardShimmer />
+                                    })}
+                                </>
                         }
                     </div>
                 </div>
