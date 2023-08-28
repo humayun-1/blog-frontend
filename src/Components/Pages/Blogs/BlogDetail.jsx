@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Wrapper from '../../Elements/Layout/Wrapper'
 import SimpleCard from '../../Elements/Cards/SimpleCard';
 import useSinglePost from '../../Firebase/useSinglePost';
+import useFilteredData from '../../Firebase/useCategoryPost';
+import Categories from '../../Data/Categories';
+import FlexCol from '../../Elements/Layout/FlexCol';
+import SimpleCardShimmer from '../../Elements/Cards/Shimmer/SimpleCardShimmer';
 
 const BlogDetail = () => {
     const [Related, setRelated] = useState([]);
@@ -23,6 +27,14 @@ const BlogDetail = () => {
             setCurrent(Data);
         }
     }, [Data])
+
+    const [BlogCAT, setBlogCAT] = useState([]);
+
+    const { loading: loadingCAT, noDataFound4, filteredData: CAT } = useFilteredData(Categories[Current?.category], 5);
+    useEffect(() => {
+        let filtered  = CAT.filter(ele=>ele.id != news_id)
+        setBlogCAT(filtered);
+    }, [CAT]);
     return (
         <>
             <Wrapper>
@@ -53,14 +65,15 @@ const BlogDetail = () => {
                                 <div className="mt-10 lg:mt-0 lg:col-span-4">
                                     <div className="bg-white overflow-hidden shadow rounded-lg">
                                         <div className="p-5">
-                                            <h3 className="text-lg leading-6 font-medium text-gray-900">Related Articles</h3>
-                                            <ul className="mt-4">
+                                            <h3 className="text-2xl leading-6 font-medium text-gray-900">Related Articles</h3>
+                                            <FlexCol className="mt-4 gap-6">
                                                 {
-                                                    [0,0].map(ele => {
-                                                        return <SimpleCard className={"!h-[12rem]"} />
-                                                    })
+                                                    !loadingCAT ?
+                                                    BlogCAT?.map(ele => {
+                                                        return <SimpleCard type={ele?.category} description={ele?.description} id={ele?.id} image={ele?.image} title={ele?.title} className={"!h-[12rem]"} />
+                                                    }) : [0,0,0,0].map(ele=><SimpleCardShimmer />)
                                                 }
-                                            </ul>
+                                            </FlexCol>
                                         </div>
                                     </div>
                                 </div>

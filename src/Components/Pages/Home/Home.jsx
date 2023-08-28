@@ -33,7 +33,7 @@ const Home = () => {
     }, [LATEST]);
 
     const [BlogNews, setBlogNews] = useState([]);
-    const { loading: loadingNEWS, noDataFound, filteredData: NEWS } = useFilteredData(Categories['NEWS']);
+    const { loading: loadingNEWS, noDataFound, filteredData: NEWS } = useFilteredData(Categories['NEWS'], 12);
 
     useEffect(() => {
         setBlogNews(NEWS);
@@ -52,18 +52,33 @@ const Home = () => {
     }, [ASIA]);
 
 
-    const Latest = ["Shop sales hit by July's wet weather", 'Cash, cars and homes seized in $735m Singapore raids', 'Burger King drops tomatoes from its India menu', 'Police urged to overlook early pub sales for World Cup'];
 
-    const MORE_ABOUT = [
-        "Abused and stalked, US election workers brace for 2024",
-        'Britney Spears and Sam Asghari split - reports',
-        'N Korea believed headed to world taekwondo contest',
-        'The baby at the centre of an India-Germany row',
-        "Behind Trump's support linger doubts on electability",
-        " Harrison Ford has a snake species named after him  ",
-        " Trump's very chaotic court and campaign schedule  ",
-        " Inside notorious Atlanta jail where Trump will surrender  "
-    ];
+    const [BlogCulture, setBlogCulture] = useState([]);
+    const { loading: loadingCulture, noDataFound5, filteredData: CULTURE } = useFilteredData(Categories['CULTURE']);
+    useEffect(() => {
+        setBlogCulture(CULTURE);
+    }, [CULTURE]);
+
+
+    const [BlogEditor, setBlogEditor] = useState([]);
+    const { loading: loadingEditor, noDataFound6, filteredData: Editor } = useFilteredData(Categories['EDITOR’S PICKS']);
+    useEffect(() => {
+        setBlogEditor(Editor);
+    }, [Editor]);
+
+    const [BlogNewLatest, setBlogNewLatest] = useState([]);
+    const { loading: loadingNewLatest, noDataFound7, filteredData: NewLatest } = useFilteredData(Categories['ASIA'], 30);
+    useEffect(() => {
+        setBlogNewLatest(NewLatest.slice(16, 30));
+    }, [NewLatest]);
+
+    const [BlogFUTURE, setBlogFUTURE] = useState([]);
+    const { loading: loadingFUTURE, noDataFound8, filteredData: FUTURE } = useFilteredData(Categories['FUTURE'], 3);
+    useEffect(() => {
+        setBlogFUTURE(FUTURE);
+    }, [FUTURE]);
+
+
 
     const navigate = useNavigate()
 
@@ -73,12 +88,12 @@ const Home = () => {
                 <FlexCol className={'container gap-3'}>
                     <h1 className='text-[#4a4a4a] font-semibold text-xl'>Welcome to Kazakhstan<span className='text-yellow-500'>Review</span>.com</h1>
                     <div className='grid lg:grid-cols-2 min-h-[25rem] gap-3'>
-                        <LargeCard title="" description="" image="" />
+                        <LargeCard data={CULTURE[0]} title="" description="" image="" />
                         <div className='grid md:grid-cols-2 gap-3'>
-                            <SmallCard />
-                            <SmallCard />
-                            <SmallCard />
-                            <SmallCard />
+                            <SmallCard data={CULTURE[1]} />
+                            <SmallCard data={CULTURE[2]} />
+                            <SmallCard data={CULTURE[3]} />
+                            <SmallCard data={CULTURE[4]} />
                         </div>
                     </div>
                 </FlexCol>
@@ -137,17 +152,30 @@ const Home = () => {
                                 <h1 className='text-[3rem] leading-[1]'>Reel</h1>
                                 <p>The most amazing videos from the Kazakhstan Review</p>
                             </div>
-                            <div>
+                            {/* <div>
                                 <button className='border border-white px-4 py-1.5 flex items-center gap-2 rounded-full hover:bg-black transition-all whitespace-nowrap'>
                                     <p>Visit Reel</p>
                                     <Svgs.Arrow />
                                 </button>
-                            </div>
+                            </div> */}
                         </FlexRow>
                         <div className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4'>
                             {
-                                [0, 0, 0].map(ele => {
-                                    return <VideoCard type={'sports'} />
+                                [
+                                    {
+                                        title: "Short trip to Kazakhstan | Heaven on Earth",
+                                        url: "https://www.youtube.com/watch?v=jx5TZbkUgBs"
+                                    },
+                                    {
+                                        title: "Kazakhstan Travel Guide: 11 BEST Places to Visit in Kazakhstan",
+                                        url: "https://www.youtube.com/watch?v=kVDLM8DfNFE"
+                                    },
+                                    {
+                                        title: 'The nature of kazakhstan | Natural wonders of kazakhstan',
+                                        url: "https://www.youtube.com/watch?v=-aoqapsL-s0"
+                                    },
+                                ].map(ele => {
+                                    return <VideoCard data={ele} type={'sports'} />
                                 })
                             }
                         </div>
@@ -185,31 +213,36 @@ const Home = () => {
                             <div className='lg:col-span-4'>
                                 <FlexCol className={'gap-4'}>
                                     <div className='h-[30rem]'>
-                                        <LargeCard />
+                                        <LargeCard data={BlogEditor[0]} />
                                     </div>
                                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
                                         {
-                                            [0, 0, 0, 0, 0, 0].map(ele => {
-                                                return <SimpleCard className={'!h-[10rem]'} />
-                                            })
+                                            !loadingEditor ?
+                                                BlogEditor?.slice(1, 7).map(ele => {
+                                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} image={ele?.image} className={'!h-[10rem]'} />
+                                                })
+                                                :
+                                                [0, 0, 0, 0, 0, 0].map(ele => <SimpleCardShimmer />)
                                         }
                                     </div>
                                 </FlexCol>
                             </div>
                             <div className='lg:col-span-2'>
                                 <div className='bg-[#ea1801] px-3 py-2 text-white'>
-                                    <p className='font-semibold'>LATEST BUSINESS NEWS</p>
+                                    <p className='font-semibold'>LATEST TRENDING NEWS</p>
                                 </div>
                                 {
-                                    Latest.map((ele, i) => {
-                                        return <div className='px-8 py-10 flex items-center gap-3 odd:bg-[#363636] bg-[#2f2f2f] cursor-pointer'>
+                                    Bloglatest?.slice(0, 5).map((ele, i) => {
+                                        return <div className='px-8 py-10 flex items-center gap-3 odd:bg-[#363636] bg-[#2f2f2f] cursor-pointer' onClick={() => {
+                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                        }}>
                                             <div>
                                                 <div className='h-[3rem] w-[3rem] rounded-full bg-[#ea1801] flex items-center justify-center italic text-lg text-white'>
                                                     {i + 1}
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className='text-[#d3d3d3] transition-all hover:text-white text-xl font-semibold'>{ele}</p>
+                                                <p className='text-[#d3d3d3] transition-all hover:text-white text-xl font-semibold'>{ele?.title}</p>
                                             </div>
                                         </div>
                                     })
@@ -235,10 +268,11 @@ const Home = () => {
                         </FlexRow>
                         <div className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4'>
                             {
-                                ['scuba', 'mountains', 'ocean'].map(ele => {
-                                    return <VideoCard no_play={TouchEvent} type={ele} />
-                                })
+                                BlogFUTURE.map(ele => {
+                                    return <VideoCard data={ele} no_play={true} type={ele} />
+                                }) 
                             }
+                          
                         </div>
                     </FlexCol>
                 </div>
@@ -276,15 +310,17 @@ const Home = () => {
                                     <p className='font-semibold'>LATEST BUSINESS NEWS</p>
                                 </div>
                                 {
-                                    MORE_ABOUT.map((ele, i) => {
-                                        return <div className='px-8 py-10 flex items-center gap-3 odd:bg-[#363636] bg-[#2f2f2f] cursor-pointer'>
+                                    BlogNewLatest?.slice(0, 5).map((ele, i) => {
+                                        return <div className='px-8 py-10 flex items-center gap-3 odd:bg-[#363636] bg-[#2f2f2f] cursor-pointer' onClick={() => {
+                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                        }}>
                                             <div>
                                                 <div className='h-[3rem] w-[3rem] rounded-full bg-[#ea1801] flex items-center justify-center italic text-lg text-white'>
                                                     {i + 1}
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className='text-[#d3d3d3] transition-all hover:text-white text-xl font-semibold'>{ele}</p>
+                                                <p className='text-[#d3d3d3] transition-all hover:text-white text-xl font-semibold'>{ele?.title}</p>
                                             </div>
                                         </div>
                                     })
@@ -293,13 +329,20 @@ const Home = () => {
                             <div className='lg:col-span-4'>
                                 <FlexCol className={'gap-4'}>
                                     <div className='h-[30rem]'>
-                                        <LargeCard />
+                                        <LargeCard data={BlogNewLatest[6]} />
                                     </div>
                                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
                                         {
-                                            [0, 0, 0, 0, 0, 0].map(ele => {
-                                                return <SimpleCard className={'!h-[10rem]'} />
-                                            })
+                                            !loadingNewLatest ?
+                                                BlogNewLatest.slice(0,6)?.map(ele => {
+                                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                                })
+                                                :
+                                                <>
+                                                    {[0, 0, 0, 0, 0, 0].map(ele => {
+                                                        return <SimpleCardShimmer />
+                                                    })}
+                                                </>
                                         }
                                     </div>
                                 </FlexCol>

@@ -4,6 +4,9 @@ const Categories = {
     'ASIA': "ASIA",
     'SPORT': "SPORT",
     'NEWS': "NEWS",
+    'CULTURE': "CULTURE",
+    'NATURE': "NATURE",
+    'FUTURE': "FUTURE",
 }
 
 export default Categories

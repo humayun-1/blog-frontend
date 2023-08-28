@@ -25,13 +25,13 @@ const HeaderJson = [
         "color": "#0068ff"
     },
     // {
-    //     "name": "Worklife",
-    //     "url": "/category/worklife",
+    //     "name": "Culture",
+    //     "url": "/category/culture",
     //     "color": "#0052a1"
     // },
     // {
-    //     "name": "Travel",
-    //     "url": "/category/travel",
+    //     "name": "Nature",
+    //     "url": "/category/nature",
     //     "color": "#589e50"
     // },
     // {
