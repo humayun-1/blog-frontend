@@ -57,7 +57,7 @@ const Header = () => {
       <div className='container py-3'>
         <FlexRow className='justify-between gap-4'>
           <div>
-            <FlexRow className='gap-5'>
+            <FlexRow className='gap-5 '>
               <div className='w-[12rem] sm:block hidden' onClick={()=>{
                 navigate('/')
               }}>
