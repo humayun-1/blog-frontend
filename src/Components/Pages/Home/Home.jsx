@@ -122,7 +122,7 @@ const Home = () => {
                     }
                 </FlexCol>
 
-                <FlexCol className={'container gap-3'}>
+                {/* <FlexCol className={'container gap-3'}>
                     <TypeSticker color={'bg-yellow-500'} size={'lg'} text={'Sport'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-3 sm:grid-cols-2 gap-4'>
                         {
@@ -142,15 +142,15 @@ const Home = () => {
                             navigate('/category/sport')
                         }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
                     }
-                </FlexCol>
+                </FlexCol> */}
 
 
                 <div className='reel_bg'>
                     <FlexCol className='container py-[2rem] gap-8'>
                         <FlexRow className='justify-between text-white'>
                             <div>
-                                <h1 className='text-[3rem] leading-[1]'>Reel</h1>
-                                <p>The most amazing videos from the Kazakhstan Review</p>
+                                <h1 className='text-[3rem] leading-[1]'>Best Videos</h1>
+                                <p>The most amazing videos showcased on the Kazakhstan Review</p>
                             </div>
                             {/* <div>
                                 <button className='border border-white px-4 py-1.5 flex items-center gap-2 rounded-full hover:bg-black transition-all whitespace-nowrap'>
@@ -183,7 +183,7 @@ const Home = () => {
                 </div>
 
 
-                <FlexCol className={'container gap-3'}>
+                {/* <FlexCol className={'container gap-3'}>
                     <TypeSticker color={'bg-yellow-500'} size={'lg'} text={'Asia News'} textClass={'!text-[#000]'} />
                     <div className='grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-4'>
                         {
@@ -204,9 +204,9 @@ const Home = () => {
                             navigate('/category/asia')
                         }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
                     }
-                </FlexCol>
+                </FlexCol> */}
 
-                <div className='bg-[#f6f6f6]'>
+                {/* <div className='bg-[#f6f6f6]'>
                     <FlexCol className={'container gap-3 py-[2.5rem]'}>
                         <TypeSticker color={'bg-[#47a1d8]'} size={'lg'} text={'Editor’s Picks'} textClass={'!text-[#000]'} />
                         <div className='grid lg:grid-cols-6 grid-cols-1 gap-4'>
@@ -250,7 +250,7 @@ const Home = () => {
                             </div>
                         </div>
                     </FlexCol>
-                </div>
+                </div> */}
 
                 <div className='nature_bg'>
                     <FlexCol className='container py-[2rem] gap-8'>

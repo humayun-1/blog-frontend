@@ -9,16 +9,16 @@ const HeaderJson = [
         "url": "/category/news",
         "color": "#eb0000"
     },
-    {
-        "name": "Asia",
-        "url": "/category/asia",
-        "color": "#800080"
-    },
-    {
-        "name": "Sport",
-        "url": "/category/sport",
-        "color": "#ffd230"
-    },
+    // {
+    //     "name": "Asia",
+    //     "url": "/category/asia",
+    //     "color": "#800080"
+    // },
+    // {
+    //     "name": "Sport",
+    //     "url": "/category/sport",
+    //     "color": "#ffd230"
+    // },
     {
         "name": "Latest",
         "url": "/category/latest",
