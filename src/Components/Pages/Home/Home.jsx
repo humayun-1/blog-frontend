@@ -115,11 +115,11 @@ const Home = () => {
                         }
 
                     </div>
-                    {
+                    {/* {
                         BlogNews?.length > 10 && <FlexRow className={'justify-center mt-[2rem]'}><Form.Button onClick={() => {
                             navigate('/category/news')
                         }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
-                    }
+                    } */}
                 </FlexCol>
 
                 {/* <FlexCol className={'container gap-3'}>
@@ -293,11 +293,11 @@ const Home = () => {
                                 </>
                         }
                     </div>
-                    {
+                    {/* {
                         Bloglatest?.length > 10 && <FlexRow className={'justify-center mt-[2rem]'}><Form.Button onClick={() => {
                             navigate('/category/latest')
                         }}>See All <Svgs.Arrow /></Form.Button></FlexRow>
-                    }
+                    } */}
                 </FlexCol>
 
 

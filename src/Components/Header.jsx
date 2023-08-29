@@ -49,10 +49,10 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (<>
-    <marquee behavior="" direction="" className='text-sm py-1'>
+    {/* <marquee behavior="" direction="" className='text-sm py-1'>
       <p className='leading-[1]'><span className='pl-[2rem]'>Letby killed the babies at a Chester hospital in 2015 and 2016 - she is the most prolific killer of babies in the UK in modern times.</span> <span className='pl-[2rem]'>
         Shocking video of smoke-filled routes are shared online as deadlines to evacuate the Northwest Territories looms.</span> <span className='pl-[2rem]'>Letby killed the babies at a Chester hospital in 2015 and 2016 - she is the most prolific killer of babies in the UK in modern times.</span></p>
-    </marquee>
+    </marquee> */}
     <div className='bg-black text-white'>
       <div className='container py-3'>
         <FlexRow className='justify-between gap-4'>
