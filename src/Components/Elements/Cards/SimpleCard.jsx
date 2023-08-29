@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-const SimpleCard = ({ type, className, parentClass, image, description, title, id }) => {
+const SimpleCard = ({ url,type, className, parentClass, image, description, title, id }) => {
     const navigate = useNavigate();
     return (
         <FlexCol onClick={() => {
-            if (id) {
-                window.open(`/news?news_id=${id}`, '_blank');
+            if (url) {
+                window.open(`${url}`, '_blank');
             }
         }} className={`${parentClass} cursor-pointer`}>
             <div className={`h-[18rem] overflow-hidden ${className}`}>

@@ -4,8 +4,8 @@ import FlexCol from '../../../Elements/Layout/FlexCol'
 const ImageCard = ({ color, data }) => {
     return (
         <div className='h-full w-full relative overflow-hidden cursor-pointer group' onClick={() => {
-            if (data?.id) {
-                window.open(`/news?news_id=${data?.id}`, '_blank');
+            if (data?.url) {
+                window.open(`${data?.url}`, '_blank');
             }
         }}>
             <img src={data?.image} className='object-cover object-center h-full w-full brightness-75 group-hover:scale-[1.12] group-hover:rotate-3 group-hover:brightness-100 transition-all absolute inset-0 z-[1]' alt="" />

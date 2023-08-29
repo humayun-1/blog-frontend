@@ -70,7 +70,7 @@ const BlogDetail = () => {
                                                 {
                                                     !loadingCAT ?
                                                     BlogCAT?.map(ele => {
-                                                        return <SimpleCard type={ele?.category} description={ele?.description} id={ele?.id} image={ele?.image} title={ele?.title} className={"!h-[12rem]"} />
+                                                        return <SimpleCard url={ele?.url} type={ele?.category} description={ele?.description} id={ele?.id} image={ele?.image} title={ele?.title} className={"!h-[12rem]"} />
                                                     }) : [0,0,0,0].map(ele=><SimpleCardShimmer />)
                                                 }
                                             </FlexCol>

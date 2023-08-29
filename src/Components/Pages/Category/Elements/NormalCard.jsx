@@ -8,8 +8,8 @@ const NormalCard = ({ size, noImage, noDescripton, noFooter, className, headingC
     const naviagte = useNavigate();
     return (
         <FlexCol className={`gap-1 cursor-pointer ${className}`} onClick={() => {
-            if (data?.id) {
-                window.open(`/news?news_id=${data?.id}`, '_blank');
+            if (data?.url) {
+                window.open(`${data?.url}`, '_blank');
             }
         }}>
             {

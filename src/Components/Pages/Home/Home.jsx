@@ -104,7 +104,7 @@ const Home = () => {
                         {
                             !loadingNEWS ?
                                 BlogNews?.map(ele => {
-                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                    return <SimpleCard url={ele?.url} type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
                                 })
                                 :
                                 <>
@@ -128,7 +128,7 @@ const Home = () => {
                         {
                             !loadingSPORT ?
                                 BlogSport?.length > 0 ? BlogSport?.map(ele => {
-                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                    return <SimpleCard url={ele?.url} type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
                                 }) : <NoRecordFound />
                                 : <>
                                     {[0, 0, 0, 0, 0, 0].map(ele => {
@@ -189,7 +189,7 @@ const Home = () => {
                         {
                             !loadingASIA ?
                                 BlogAsia?.length > 0 ? BlogAsia?.map(ele => {
-                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                    return <SimpleCard url={ele?.url} type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
                                 }) : <NoRecordFound />
                                 :
                                 <>
@@ -219,7 +219,7 @@ const Home = () => {
                                         {
                                             !loadingEditor ?
                                                 BlogEditor?.slice(1, 7).map(ele => {
-                                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} image={ele?.image} className={'!h-[10rem]'} />
+                                                    return <SimpleCard url={ele?.url} type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} image={ele?.image} className={'!h-[10rem]'} />
                                                 })
                                                 :
                                                 [0, 0, 0, 0, 0, 0].map(ele => <SimpleCardShimmer />)
@@ -234,7 +234,7 @@ const Home = () => {
                                 {
                                     Bloglatest?.slice(0, 5).map((ele, i) => {
                                         return <div className='px-8 py-10 flex items-center gap-3 odd:bg-[#363636] bg-[#2f2f2f] cursor-pointer' onClick={() => {
-                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                            window.open(`${ele?.url}`, '_blank');
                                         }}>
                                             <div>
                                                 <div className='h-[3rem] w-[3rem] rounded-full bg-[#ea1801] flex items-center justify-center italic text-lg text-white'>
@@ -284,7 +284,7 @@ const Home = () => {
                         {
                             !loadingLATEST ?
                                 Bloglatest?.length > 0 ? Bloglatest?.map(ele => {
-                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                    return <SimpleCard  url={ele?.url} type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
                                 }) : <NoRecordFound /> :
                                 <>
                                     {[0, 0, 0, 0, 0, 0].map(ele => {
@@ -312,7 +312,7 @@ const Home = () => {
                                 {
                                     BlogNewLatest?.slice(0, 5).map((ele, i) => {
                                         return <div className='px-8 py-10 flex items-center gap-3 odd:bg-[#363636] bg-[#2f2f2f] cursor-pointer' onClick={() => {
-                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                            window.open(`${ele?.url}`, '_blank');
                                         }}>
                                             <div>
                                                 <div className='h-[3rem] w-[3rem] rounded-full bg-[#ea1801] flex items-center justify-center italic text-lg text-white'>
@@ -335,7 +335,7 @@ const Home = () => {
                                         {
                                             !loadingNewLatest ?
                                                 BlogNewLatest.slice(0,6)?.map(ele => {
-                                                    return <SimpleCard type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
+                                                    return <SimpleCard  url={ele?.url} type={ele?.category} id={ele?.id} description={ele?.description} title={ele?.title} className="!h-[14rem]" image={ele?.image} />
                                                 })
                                                 :
                                                 <>

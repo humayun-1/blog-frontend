@@ -98,7 +98,7 @@ const DynamicCategoryPage = () => {
                         <div className='lg:col-span-3 grid lg:grid-cols-3 gap-5 h-fit'>
                             <div className='col-span-3 grid lg:grid-cols-3 gap-5 cursor-pointer' onClick={() => {
                                 if (FinalData?.header[0]?.id) {
-                                    window.open(`/news?news_id=${FinalData?.header[0]?.id}`, '_blank');
+                                    window.open(`${FinalData?.header[0]?.url}`, '_blank');
                                 }
                             }}>
                                 <FlexCol>
@@ -176,8 +176,8 @@ const DynamicCategoryPage = () => {
                             {
                                 (FinalData?.mostWatched).map((ele, i) => {
                                     return <FlexRow className={'!items-start cursor-pointer'} onClick={() => {
-                                        if (ele?.id) {
-                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                        if (ele?.url) {
+                                            window.open(`${ele?.url}`, '_blank');
                                         }
                                     }}>
                                         <div className='h-fit'>
@@ -223,8 +223,8 @@ const DynamicCategoryPage = () => {
                             {
                                 FinalData?.mostRead.map((ele, i) => {
                                     return <FlexRow className={'!items-start cursor-pointer'} onClick={() => {
-                                        if (ele?.id) {
-                                            window.open(`/news?news_id=${ele?.id}`, '_blank');
+                                        if (ele?.url) {
+                                            window.open(`${ele?.url}`, '_blank');
                                         }
                                     }}>
                                         <div className='h-fit'>

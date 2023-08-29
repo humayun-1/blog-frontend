@@ -22,7 +22,7 @@ const VideoCard = ({ no_play, data }) => {
         )}
         <div className={''} onClick={() => {
             if (no_play) {
-                window.open(`/news?news_id=${data?.id}`, '_blank');
+                window.open(`${data?.url}`, '_blank');
             } else {
                 setShowPopup(true)
             }

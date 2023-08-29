@@ -6,7 +6,7 @@ const SmallCard = ({ data }) => {
     return (
         <div onClick={() => {
             if (data?.id) {
-                window.open(`/news?news_id=${data?.id}`, '_blank');
+                window.open(`${data?.url}`, '_blank');
             }
         }} className='h-full w-full min-h-[12.5rem] relative overflow-hidden cursor-pointer group'>
             <img src={data?.image} className='object-cover object-center h-full w-full brightness-75 group-hover:scale-[1.12] group-hover:rotate-3 group-hover:brightness-100 transition-all absolute inset-0 z-[1]' alt="" />

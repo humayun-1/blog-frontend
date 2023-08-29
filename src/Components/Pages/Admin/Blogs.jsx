@@ -57,7 +57,7 @@ const Blogs = () => {
                 </FlexRow>
                 <div>
                     <div className='grid xl:grid-cols-4 md:grid-cols-3 gap-6'>
-
+                    {console.log(AllBlogs)}
                         {
                             !loading ?
                                 AllBlogs.map(ele => {

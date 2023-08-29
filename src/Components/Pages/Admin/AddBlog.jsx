@@ -32,7 +32,8 @@ const AddBlog = () => {
   const [Blog, setBlog] = useState({
     title: '',
     category: '',
-    image: ""
+    image: "",
+    url: "",
   })
 
   useEffect(() => {
@@ -82,6 +83,9 @@ const AddBlog = () => {
     }
     if (!Image && !(Blog?.image)) {
       newErrors.image = 'Image is required';
+    }
+    if (!Blog.url && !(Blog?.url)) {
+      newErrors.image = 'URL is required';
     }
     return newErrors;
   };
@@ -213,6 +217,7 @@ const AddBlog = () => {
             <h1 className='text-[2rem]'>{Edit ? "Edit Blog" : " Add a new blog"}</h1>
           </FlexRow>
           <Form.Input error={errors.title} name="title" onChange={onChangeHandler} value={Blog?.title} label={'Title'} />
+          <Form.Input error={errors.url} name="url" onChange={onChangeHandler} value={Blog?.url} label={'URL'} placeholder={'Enter Blog URL'} />
           <FlexCol className={'mt-2'}>
             <p className='text-sm'>Description</p>
             <div className={`border ${errors.description && '!border-red-500'}`}>
