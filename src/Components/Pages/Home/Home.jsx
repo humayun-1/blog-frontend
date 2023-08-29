@@ -301,9 +301,9 @@ const Home = () => {
                 </FlexCol>
 
 
-                <div className='bg-[#f6f6f6]'>
+                {/* <div className='bg-[#f6f6f6]'>
                     <FlexCol className={'container gap-3 py-[2.5rem]'}>
-                        <TypeSticker color={'bg-[#47a1d8]'} size={'lg'} text={'More around the Kazakhstan Review'} textClass={'!text-[#000]'} />
+                        <TypeSticker color={'bg-[#47a1d8]'} size={'lg'} text={'More from the Kazakhstan Review'} textClass={'!text-[#000]'} />
                         <div className='grid lg:grid-cols-6 grid-cols-1 gap-4'>
                             <div className='lg:col-span-2'>
                                 <div className='bg-[#ea1801] px-3 py-2 text-white'>
@@ -349,7 +349,7 @@ const Home = () => {
                             </div>
                         </div>
                     </FlexCol>
-                </div>
+                </div> */}
 
 
 
