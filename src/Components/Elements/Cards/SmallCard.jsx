@@ -2,7 +2,7 @@ import React from 'react'
 import FlexCol from '../Layout/FlexCol'
 import TypeSticker from './TypeSticker'
 
-const SmallCard = ({ data }) => {
+const SmallCard = ({ data ,no_sticker}) => {
     return (
         <div onClick={() => {
             if (data?.id) {
@@ -13,7 +13,10 @@ const SmallCard = ({ data }) => {
             <div className='absolute bottom-0 left-0 right-0 p-4 bg-overlay z-[2]'>
                 <FlexCol className={'text-white'}>
                     <h5 className='text-[1rem] font-semibold'>{data?.title}</h5>
-                    <TypeSticker color={"bg-red-500"} text={data?.category} />
+                    {
+                        !no_sticker && <TypeSticker color={"bg-red-500"} text={data?.category} />
+                    }
+                    
                 </FlexCol>
             </div>
         </div>

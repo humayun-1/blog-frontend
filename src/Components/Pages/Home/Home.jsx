@@ -88,12 +88,12 @@ const Home = () => {
                 <FlexCol className={'container gap-3'}>
                     <h1 className='text-[#4a4a4a] font-semibold text-xl'>Welcome to Kazakhstan<span className='text-yellow-500'>Review</span>.com</h1>
                     <div className='grid lg:grid-cols-2 min-h-[25rem] gap-3'>
-                        <LargeCard data={CULTURE[0]} title="" description="" image="" />
+                        <LargeCard no_sticker data={CULTURE[0]} title="" description="" image="" />
                         <div className='grid md:grid-cols-2 gap-3'>
-                            <SmallCard data={CULTURE[1]} />
-                            <SmallCard data={CULTURE[2]} />
-                            <SmallCard data={CULTURE[3]} />
-                            <SmallCard data={CULTURE[4]} />
+                            <SmallCard no_sticker data={CULTURE[1]} />
+                            <SmallCard no_sticker data={CULTURE[2]} />
+                            <SmallCard no_sticker data={CULTURE[3]} />
+                            <SmallCard no_sticker data={CULTURE[4]} />
                         </div>
                     </div>
                 </FlexCol>

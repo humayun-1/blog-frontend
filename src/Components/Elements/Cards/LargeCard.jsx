@@ -2,7 +2,7 @@ import React from 'react'
 import FlexCol from '../Layout/FlexCol'
 import TypeSticker from './TypeSticker'
 
-const LargeCard = ({ data }) => {
+const LargeCard = ({ data,no_sticker }) => {
     return (
         <div onClick={() => {
             if (data?.url) {
@@ -16,7 +16,10 @@ const LargeCard = ({ data }) => {
                     <div className='text-[#d3d3d3] line-clamp-2'>
                         <div className='' dangerouslySetInnerHTML={{ __html: data?.description }}></div>
                     </div>
-                    <TypeSticker color={"bg-red-500"} text={data?.category} />
+                    {
+                        !no_sticker && <TypeSticker color={"bg-red-500"} text={data?.category} />
+                    }
+                    
                 </FlexCol>
             </div>
         </div>
