@@ -64,12 +64,12 @@ const Header = () => {
                 {/* <Svgs.Logo /> */}
                 <img src={`${process.env.PUBLIC_URL}/Assets/images/logo.png`} className="h-[3rem] w-full object-contain" />
               </div>
-              <FlexRow className={'cursor-pointer'} onClick={() => {
+              {/* <FlexRow className={'cursor-pointer'} onClick={() => {
                 navigate('/admin')
               }}>
                 <Svgs.User size={'1.5rem'} />
                 <p className='whitespace-nowrap text-[0.84rem]'>Sign in</p>
-              </FlexRow>
+              </FlexRow> */}
             </FlexRow>
           </div>
           <FlexRow className={'gap-10 border-l border-[#262626] pl-5'}>

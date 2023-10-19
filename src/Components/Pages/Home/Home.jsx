@@ -87,7 +87,7 @@ const Home = () => {
             <FlexCol className='gap-10 py-[2rem]'>
                 <FlexCol className={'container gap-3'}>
                     <h1 className='text-[#4a4a4a] font-semibold text-xl'>Welcome to Kazakhstan<span className='text-yellow-500'>Review</span>.com</h1>
-                    <div className='grid lg:grid-cols-2 min-h-[25rem] gap-3'>
+                    <div className='grid lg:grid-cols-2 lg:h-[25rem] min-h-[25rem] gap-3'>
                         <LargeCard no_sticker data={CULTURE[0]} title="" description="" image="" />
                         <div className='grid md:grid-cols-2 gap-3'>
                             <SmallCard no_sticker data={CULTURE[1]} />
@@ -354,7 +354,7 @@ const Home = () => {
 
 
 
-                <div className='bg-white'>
+                {/* <div className='bg-white'>
                     <FlexCol className={'container gap-6'}>
                         <h1 className='text-[1.5rem] text-[#4a4a4a]'>Kazakhstan Review IN OTHER LANGUAGES</h1>
                         <div className='grid xl:grid-cols-7 md:grid-cols-5 grid-cols-2 gap-5'>
@@ -391,7 +391,7 @@ const Home = () => {
                             }
                         </div>
                     </FlexCol>
-                </div>
+                </div> */}
 
             </FlexCol>
 
